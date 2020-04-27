@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Run Zeng">
+
+
+    <meta name="subtitle" content="Welcome to my blog">
+
+
+
+
+<title>Distributed system - Class 4 | Run Zeng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Run Zeng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Run Zeng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Distributed system - Class 4</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Run Zeng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 26, 2020&nbsp;&nbsp;17:15:11</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/notes/">notes</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="Midlleware-and-EAI"><a href="#Midlleware-and-EAI" class="headerlink" title="Midlleware and EAI"></a>Midlleware and EAI</h3><h3 id="Some-distributed-system"><a href="#Some-distributed-system" class="headerlink" title="Some distributed system"></a>Some distributed system</h3><p>Human designed more samrt system in mobile system, such as smart card.</p>
+<h3 id="Mobile-computing"><a href="#Mobile-computing" class="headerlink" title="Mobile computing"></a>Mobile computing</h3><p>Most of mobile system are forcused on networking. Wire connection is slow and not stable.</p>
+<h3 id="Sesor-networks"><a href="#Sesor-networks" class="headerlink" title="Sesor networks"></a>Sesor networks</h3><p>Generaly make more memory into sensors. Kep them simple to makek them small.</p>
+<ul>
+<li>All data is stored in a operator’s site and sensor only conveys the signal.</li>
+<li>Each sensor stores part of data. Some integration ssytem drops some signals without losing key information.</li>
+</ul>
+<h2 id="Architectural-system"><a href="#Architectural-system" class="headerlink" title="Architectural system"></a>Architectural system</h2><h3 id="Layer-organization-your-free-to-design-layers"><a href="#Layer-organization-your-free-to-design-layers" class="headerlink" title="Layer organization (your free to design layers)"></a>Layer organization (your free to design layers)</h3><ul>
+<li>broadcast. One layer to one layer, they can exchange messages</li>
+<li>Web. Send request to split to storage system and do check , one transacion combines two subtransactions. </li>
+<li>One layer responses to request by doing multible jobs.</li>
+</ul>
+<h3 id="Example-communication-protocols"><a href="#Example-communication-protocols" class="headerlink" title="Example: communication protocols"></a>Example: communication protocols</h3><p><strong>RBC model</strong>: A classic architecture</p>
+<p>Socket: write something to the end of pipe, server listen in the other end.</p>
+<p>Application layer(server) in the middle between : cacheing layer. Query generator stores index of all pages.</p>
+<p><strong>Objext-based style</strong>: Less popular</p>
+<p>Put user interface to machine 1, put server to machine 2, put other method to machine 3, looks good to distributed system, but actually not good because of too many machines result to latency.</p>
+<p>CORBA: （Common Object Request Broker Architecture公共对象请求代理体系结构）是由OMG组织制订的一种标准的面向对象应用程序体系规范。</p>
+<p><strong>RESTful architectures</strong>: more popular</p>
+<p>全称是 Resource Representational State Transfer：通俗来讲就是：资源在网络中以某种表现形式进行状态转移。分解开来：Resource：资源，即数据（前面说过网络的核心）。比如 newsfeed，friends等；Representational：某种表现形式，比如用JSON，XML，JPEG等；State Transfer：状态变化。通过HTTP动词实现。</p>
+<p>Basic operation: PUT(update), GET, DELETE, POST</p>
+<p>Hard to state transaction. Example: Amazon’s Simple Storage Service(operation is simple), Amazon S3 SOAP interface (call can come back, you can see what is wrong).</p>
+<h2 id="Cordination"><a href="#Cordination" class="headerlink" title="Cordination"></a>Cordination</h2><h3 id="Temporal-and-referential-coupling"><a href="#Temporal-and-referential-coupling" class="headerlink" title="Temporal and referential coupling"></a>Temporal and referential coupling</h3><ul>
+<li>Temporal coupling</li>
+<li><ul>
+<li>Phone call system. You must know location and phone number. </li>
+</ul>
+</li>
+<li>Temporally decoupled. </li>
+<li><ul>
+<li>Email system. You must know location and email address. You should be upon running all the time but the reciever doesn’t need to upon running all the time.</li>
+</ul>
+</li>
+</ul>
+<h3 id="Event-based-and-Shared-space"><a href="#Event-based-and-Shared-space" class="headerlink" title="Event based and Shared space"></a>Event based and Shared space</h3><ul>
+<li>don’t need to know address, because this meassage will be distributed</li>
+<li>don’t need to know both </li>
+</ul>
+<h2 id="Build-middleware-some-popluar-mechanism"><a href="#Build-middleware-some-popluar-mechanism" class="headerlink" title="Build middleware (some popluar mechanism)"></a>Build middleware (some popluar mechanism)</h2><p><img src="https://github.com/r24zeng/r24zeng.github.io/blob/master/images/my4.png" alt=""></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Run Zeng</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>To be my own hero. Never never never give up...</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/distributed-system/"># distributed system</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/04/26/ds-10/">Distributed system - Class 10(Assignment 2&3 tutorial)</a>
+            
+            
+            <a class="next" rel="next" href="/2020/04/26/ds-05/">Distributed system - Class 5</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Run Zeng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Run Zeng">
+
+
+    <meta name="subtitle" content="Welcome to my blog">
+
+
+
+
+<title>Distributed system - Class 15 | Run Zeng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Run Zeng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Run Zeng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Distributed system - Class 15</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Run Zeng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 26, 2020&nbsp;&nbsp;17:15:11</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/notes/">notes</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Two-Phase-Locking-2PL"><a href="#Two-Phase-Locking-2PL" class="headerlink" title="Two-Phase Locking (2PL)"></a>Two-Phase Locking (2PL)</h2><blockquote>
+<p>continue obtaining locks, until the end, you release all locks.</p>
+</blockquote>
+<p>If you start a write transaction, nobody can get the locker.</p>
+<p>But this is not practical, because when you have a read lock, then want a write lock, but you can’t anymore lock if you release all locks. So you need to know the logic behind it and hold the lcok no longer than you need. So you must know the concurrency in a time unit.</p>
+<p>Dead lock happens depends on your lock protocals. For example, one transaction holds read lock, and wait writing lock, but another transaction holds write lock, and wait for reading lock to finish. Then dead lock happends.</p>
+<h3 id="strict-2PL"><a href="#strict-2PL" class="headerlink" title="strict 2PL"></a>strict 2PL</h3><blockquote>
+<p>holding all locks until the end</p>
+</blockquote>
+<ul>
+<li><p>centralized 2PL<br>locker manager manages all locks for all transactions. </p>
+</li>
+<li><p>dsitributed 2PL</p>
+<blockquote>
+<p>locks are on side of data, which means locks partition to mutilple sites. This way is better for distributed system but more cost for messages.</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="Deadlock"><a href="#Deadlock" class="headerlink" title="Deadlock"></a>Deadlock</h3><blockquote>
+<p>You holds the resource I want and I also hold the resource you want.</p>
+</blockquote>
+<p>one solution: One people holds the non-shared resource.</p>
+<h3 id="Deadlock-management"><a href="#Deadlock-management" class="headerlink" title="Deadlock management"></a>Deadlock management</h3><p>It’s doesn’t matter centralized system or distributed system, the only resolution is to kill one transaction.</p>
+<ul>
+<li>prevent deadlock happen: all resource may be needed predelcare, 确保根本不发生 (highest level)</li>
+<li>avoid potential deadlock: request lock in a certian order, 避免可能发生的情况 (middle level)</li>
+<li>detection and recovery: check graph cycle and kill one transaction, 解决发生 (low level),kill youngest transaction which not done much work</li>
+</ul>
+<p>Probing: each side know which lock others are waiting for, record the meassage and transfer to next, until one site sees the cycle knows it’s a deadlock, so it will abort or ask another site to abort.</p>
+<h2 id="Timestamp-ordering"><a href="#Timestamp-ordering" class="headerlink" title="Timestamp ordering"></a>Timestamp ordering</h2><blockquote>
+<p>There are a banch of transaction waiting, I assgin each of them a stamp which is uique and I serialize them in order and then serve them in order.</p>
+</blockquote>
+<p>If no confilct, I will serve them concurrently, but if conflict, I will serve them in timestamp order.</p>
+<p>Every data item has a: <br></p>
+<ul>
+<li>read-ts(x): largest timestamp from among all timestamps if txns that have successfully read <code>x</code>, if <code>T2</code> reads, then read-ts(2); <code>T3</code> wants to read, then read-ts(2) changes to read-ts(3); <code>T1</code> wants to read, then read-ts(3) keeps because it’s the largeset.</li>
+<li>Write-ts(y): largest ts from among all timestamps of txns that have successfully written <code>x</code></li>
+</ul>
+<p>compare write-ts(y) with read-ts(x), make sure <code>y &lt; x</code>.</p>
+<p>Eg,</p>
+<table>
+<thead>
+<tr>
+<th>r-ts(x)</th>
+<th>0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>w-ts(x)</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>(1) w_1(x) <br><br>    write confilcts with read and write. 1 &gt; 0, then update w-ts(x):1.</p>
+<table>
+<thead>
+<tr>
+<th>r-ts(x)</th>
+<th>0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>w-ts(x)</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>(2) r_2(x) <br><br>read only conflict with write. 2 &gt; 1, then it can execute. Execute it, then update r-ts(x): 2.</p>
+<table>
+<thead>
+<tr>
+<th>r-ts(x)</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>w-ts(x)</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>(3) r_1(x) <br><br>read only conflicts with write. 1 = 1, then it can execute, after execution, 1 &lt; 2, then no need to update r-ts(x).</p>
+<table>
+<thead>
+<tr>
+<th>r-ts(x)</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>w-ts(x)</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>(4) w_1(x) <br><br>wirte conflicts with read and write, 1 &lt; 2, so it can’t execute.</p>
+<table>
+<thead>
+<tr>
+<th>r-ts(x)</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>w-ts(x)</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>Generally, if you abort one transaction, you should abort all related transactions. But in timestamp ordering transacton, you only need to abort one transaction adn restart it to give it a higher timestamp.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Run Zeng</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>To be my own hero. Never never never give up...</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/distributed-system/"># distributed system</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/04/26/ds-16/">Distributed system - Class 16(Replication)</a>
+            
+            
+            <a class="next" rel="next" href="/2020/04/26/ds-18/">Distributed system - Class 18(Recovery)</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Run Zeng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

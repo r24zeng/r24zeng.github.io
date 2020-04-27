@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Run Zeng">
+
+
+    <meta name="subtitle" content="Welcome to my blog">
+
+
+
+
+<title>Web knowledge conclution | Run Zeng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Run Zeng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Run Zeng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Web knowledge conclution</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Run Zeng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 26, 2020&nbsp;&nbsp;17:15:11</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/self-study/">self study</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="1-Internet-Primer-DHCP-DNS-Access-Points"><a href="#1-Internet-Primer-DHCP-DNS-Access-Points" class="headerlink" title="1. Internet Primer/DHCP/DNS/Access Points"></a>1. Internet Primer/DHCP/DNS/Access Points</h1><p><img src="/img/my1.jpg" alt="my1"><br>How do human and computer interact to Internet? <strong>Internet Primer</strong></p>
+<p><strong>IP address:</strong> </p>
+<ul>
+<li>Identity Protocal</li>
+<li>Unique identity of your computer on the Internet.</li>
+<li>Basic IP address look like: W.X.Y.Z  , each charater in range of <code>[0,255]</code></li>
+<li>Unique ID to recieve or send infomation to others</li>
+</ul>
+<hr>
+<p>How does my computer get my IP address? <strong>DHCP</strong></p>
+<p><strong>DHCP:</strong></p>
+<ul>
+<li>Dynamic Host Configuration Protocol</li>
+<li>Assign IP address to you</li>
+<li>IP can refer to any website (74.125.202.138 is one of Google’s IP)</li>
+</ul>
+<hr>
+<p>Memorize each IP of webs is chanllenge, just like to remember all phone numbers of your friends, how to solve this? <strong>DNS</strong></p>
+<p><strong>DNS:</strong></p>
+<ul>
+<li>Domain Name System </li>
+<li>Image it as local yellow page, map URL to IP of visit any web</li>
+<li>Image large DNS as a aggregator of local yellow pages of the wold, such as Google, which manages many IP to point to Google</li>
+</ul>
+<hr>
+<p><strong>Access Points</strong></p>
+<ul>
+<li>Roll somethings together, such like router, switches</li>
+<li>I understand it like local internet </li>
+<li>Local community share a public IP to connect to others</li>
+</ul>
+<hr>
+<p><img src="/img/my2.jpg" alt="my2"></p>
+<blockquote>
+<p>Actually internet doesn’t a kind of endpoint, it means users’ connectection with each other.</p>
+</blockquote>
+<h1 id="2-IP-TCP"><a href="#2-IP-TCP" class="headerlink" title="2. IP/TCP"></a>2. IP/TCP</h1><p><strong>IP:</strong></p>
+<ul>
+<li>Identity Protocal</li>
+<li>It is the rule how point A gets information from point B</li>
+<li>Intermdian <strong>router</strong>‘s job is to move traffic from cental to server, point a to point b, one step by one step</li>
+<li>Split information into packets so that if one part of information drops will be not costly</li>
+<li>If more path from A to b is better, because once encounter traffic jam there is still another path to go<br><img src="/img/my3.jpg" alt="my3"></li>
+</ul>
+<hr>
+<p><strong>TCP:</strong></p>
+<ul>
+<li>Transmission Control Protocol</li>
+<li>Guarantee delivery</li>
+<li>It has <strong>port</strong> number and number of packages<ul>
+<li>FTP(file transfer port) uses port 21</li>
+<li>SMTP(e-mail) uses port 25</li>
+<li>DNS uses port 53</li>
+<li>HTTP(web browsing) uses port 80</li>
+<li>HTTPS(secure web browsing) uses port 443</li>
+</ul>
+</li>
+<li>TCP breaks infomation to chuncks and remember the order and port of the package. Inside of TCP layer, IP remember the end address and control the route. Once IP confirms reach the reciever, it stops and show TCP layer. TCP confirm all packages reach the reciever.</li>
+</ul>
+<hr>
+<h1 id="3-HTTP"><a href="#3-HTTP" class="headerlink" title="3. HTTP"></a>3. HTTP</h1><p><strong>HTTP:</strong></p>
+<ul>
+<li>Hypertext Transport Protocal</li>
+<li>A kind of rule or format how to send request and how to response request</li>
+<li>Can see in Chorm browser: <code>view -&gt; developer -&gt; develper tool -&gt; request -&gt; view source</code> or <code>view -&gt; developer -&gt; develper tool -&gt; response -&gt; view source</code></li>
+</ul>
+<h1 id="4-HTML"><a href="#4-HTML" class="headerlink" title="4. HTML"></a>4. HTML</h1><p><strong>HTML:</strong></p>
+<ul>
+<li>Hypertext Markup Language</li>
+<li>Edit the structure of web page</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span></span><br><span class="line">			Hello world!</span><br><span class="line">		<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Hello world!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="5-CSS"><a href="#5-CSS" class="headerlink" title="5. CSS"></a>5. CSS</h1><ul>
+<li>Cascading style sheets</li>
+<li>A kind of style sheet language</li>
+<li>Edit the style of web page, such as font-size, position, color and centering</li>
+</ul>
+<h1 id="6-JavaScript"><a href="#6-JavaScript" class="headerlink" title="6. JavaScript"></a>6. JavaScript</h1><ul>
+<li>Make website dynamic </li>
+<li>Very similar to C language</li>
+<li>No variable type and function return or not</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Run Zeng</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>To be my own hero. Never never never give up...</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/web/"># web</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/04/26/ds-03/">Distributed system - Class 3</a>
+            
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Run Zeng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
