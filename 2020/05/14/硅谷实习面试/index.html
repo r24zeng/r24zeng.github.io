@@ -14,7 +14,7 @@
 
 
 
-<title>What should we consider when design distributed system | Run Zeng&#39;s Blog</title>
+<title>硅谷实习面试经验讲座 | Run Zeng&#39;s Blog</title>
 
 
 
@@ -109,11 +109,73 @@
             <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">What should we consider when design distributed system</h1>
+            <h1 class="post-title">硅谷实习面试经验讲座</h1>
             
                 <div class="post-meta">
                     
@@ -122,14 +184,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">May 2, 2020&nbsp;&nbsp;20:50:15</a>
+                        Date: <a href="#">May 14, 2020&nbsp;&nbsp;20:15:55</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/notes/">notes</a>
+                                <a href="/categories/job/">job</a>
                             
                         </span>
                     
@@ -138,19 +200,47 @@
         </header>
 
         <div class="post-content">
-            <p>When we design a distributed system, we hope it could satisfy blow requirements:</p>
+            <h2 id="申请"><a href="#申请" class="headerlink" title="申请"></a>申请</h2><p>要清楚一个科技公司需要什么样的候选人。</p>
 <ul>
-<li>The network is reliable (impossible, no network is absolutely reliable)</li>
-<li>Latency is zero</li>
-<li>Bandwidth is infinite</li>
-<li>The network is secure</li>
-<li>Topology doesn’t change</li>
-<li>There is one administrator</li>
-<li>Transport cost is zero</li>
-<li>The network is homogenerous</li>
-<li>System clocks are identical</li>
+<li>优先级最高：coding经验多，对技术有热情</li>
+<li>优先级其次：聪明人，考算法，GPA没那么重要</li>
 </ul>
-<p>Most assumptions above are impossible, they are just perfectionists’ fantasy.</p>
+<p>如何展示出来？</p>
+<ul>
+<li>简历：内容最重要，有工业界大的project</li>
+<li>面试：</li>
+</ul>
+<h2 id="找工作途径（按优先级）"><a href="#找工作途径（按优先级）" class="headerlink" title="找工作途径（按优先级）"></a>找工作途径（按优先级）</h2><ul>
+<li>找大佬referral</li>
+<li>学校co-op平台</li>
+<li>直接联系到recruiter email </li>
+</ul>
+<p>找工作平台: Linkedin, Glassdoor, Indeed</p>
+<h2 id="算法面试"><a href="#算法面试" class="headerlink" title="算法面试"></a>算法面试</h2><ul>
+<li>mobile develop, full stack 会面到 </li>
+<li>30-60min, 1-2场</li>
+<li>Phone call, 网上写代码；In person，白板上写或者电脑上code</li>
+<li>2-3道easy（考验细节），1-2道medium或1道hard</li>
+<li>主要考察data structure；还有algorithm，会综合数据结构</li>
+</ul>
+<p>加拿大主要面试1道medium，主要考察easy和medium。美国主要考察medium和hard。有时候需要讲解思路即可，有时候需要把code写出来。</p>
+<p>Evaluation:</p>
+<ul>
+<li>解题过程中对思路要讲清楚</li>
+<li>code的评价，效率(最优解)，正确性(白板面试没有那么重要，电脑上很重要，可以写test case测试)，code style </li>
+</ul>
+<p>入门书籍推荐：cracking the coding interview<br>面试之前：Leedtcode公司tag</p>
+<p>要自己想test cases，不能太依赖于LeetCode</p>
+<h2 id="面试流程"><a href="#面试流程" class="headerlink" title="面试流程"></a>面试流程</h2><p>根据岗位（domain knowledge）：</p>
+<ul>
+<li>Mobile:</li>
+<li>Infrastructure:</li>
+<li>Back-end:</li>
+<li>Frontend:</li>
+<li>Fullstack:</li>
+</ul>
+<p>根据项目经历来问。</p>
+<p>准备：申请工作时要仔细看job description，must have/简历上写的/常见通用的问题/system design(Grokking the Systems Interview)</p>
 
         </div>
 
@@ -179,7 +269,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/distributed-system/"># distributed system</a>
+                        <a href="/tags/job-prepare/"># job prepare</a>
                     
                         
                 </span>
@@ -192,10 +282,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/05/14/%E7%A1%85%E8%B0%B7%E5%AE%9E%E4%B9%A0%E9%9D%A2%E8%AF%95/">硅谷实习面试经验讲座</a>
+                <a class="prev" rel="prev" href="/2020/05/15/OOP/">Object-oriented Programming-ADT</a>
             
             
-            <a class="next" rel="next" href="/2020/04/28/README/">README.md</a>
+            <a class="next" rel="next" href="/2020/05/02/What-should-we-consider-when-design-distributed-system/">What should we consider when design distributed system</a>
             
         </section>
 
