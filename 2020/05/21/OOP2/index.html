@@ -258,7 +258,7 @@
 <p><code>static</code> is set to let object have only coding run time life and immutable.</p>
 <p>In order to solve the problem, <strong>swap</strong> solution shows up.</p>
 <h3 id="Deep-copy-with-swap"><a href="#Deep-copy-with-swap" class="headerlink" title="Deep copy with swap"></a>Deep copy with swap</h3><p>swap solution for pointer of a class object:<br><br><img src="/img/my7.jpg" alt="my7"></p>
-<p>Deep copy solution is to pass by reference, but swap solution is to pass by value. Because swap solution doesn’t allocate space for a pointer, so the pointer inside of the function will be deleted by compiler’s default deconstructor. The pointer’s explicit copy is on stack, which will be deleted after class functioni end. Referenced data is in heap.</p>
+<p>Deep copy solution is to pass by reference, but swap solution is to pass by value. Because swap solution doesn’t allocate space for a pointer, so the pointer inside of the function will be deleted by compiler’s default deconstructor. The pointer’s explicit copy is on stack, which will be deleted after class function end. Referenced data is in heap.</p>
 <h2 id="Move-constructor"><a href="#Move-constructor" class="headerlink" title="Move constructor"></a>Move constructor</h2><blockquote>
 <p>default move constructor makes shallow copy for pointer<br><strong>move constructor usage example</strong></p>
 </blockquote>
@@ -274,7 +274,7 @@
 <p><strong>fixed form for move assignment constructor</strong></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Money</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        Money();</span><br><span class="line">        ~Money();</span><br><span class="line"></span><br><span class="line">        Money&amp; <span class="keyword">operator</span>= (Money &amp;&amp;m)&#123;</span><br><span class="line">            <span class="keyword">this</span>-&gt;amount_ = m.amount_;</span><br><span class="line">            m.amount_ = <span class="number">37416782</span>;</span><br><span class="line">            <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        <span class="keyword">int</span> amount_;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><em>For move and move assignment, there is no need to do deep copy for preserving source data, because we don’t care source object and don’t use it any more. We only care about the copy so that we don’t delete the existing pointer. Because if we pass by lvalue, it must mess around the source object, instead of doing that, we pass rvalue. If we pass value instead of reference, it will cause extra call of ccpy constructor.</em></p>
+<p><em>For move and move assignment, there is no need to do deep copy for preserving source data, because we don’t care source object and don’t use it any more. We only care about the copy so that we don’t delete the existing pointer. Because if we pass by lvalue, it must mess around the source object, instead of doing that, we pass rvalue. If we pass value instead of reference, it will cause extra call of copy constructor.</em></p>
 <h2 id="Coding"><a href="#Coding" class="headerlink" title="Coding"></a>Coding</h2><p><img src="/img/my8.jpg" alt="my8"></p>
 <p><strong>updated Rational code with adding 6 special member functions(SMF)</strong></p>
 <ul>
@@ -328,6 +328,8 @@
             </div>
         </section>
         <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/05/27/OOP3/">Object-oriented Programming - Modularization</a>
             
             
             <a class="next" rel="next" href="/2020/05/19/singleton%20DP/">Object-oriented Programming - Singleton Design Pattern</a>

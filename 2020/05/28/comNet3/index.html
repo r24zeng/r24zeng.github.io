@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Run Zeng">
+
+
+    <meta name="subtitle" content="Welcome to my blog">
+
+
+
+
+<title>Protocol Layeres | Run Zeng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Run Zeng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Run Zeng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Protocol Layeres</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Run Zeng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">May 28, 2020&nbsp;&nbsp;16:33:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/notes/">notes</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>modularization eases maintenance. When update system, change in gate procedure doesn’t affect rest of system.</p>
+<p><img src="/img/my23.jpg" alt="my23.jpg"></p>
+<h3 id="Internet-protocol-stack"><a href="#Internet-protocol-stack" class="headerlink" title="Internet protocol stack:"></a>Internet protocol stack:</h3><ul>
+<li>application: supporting network<br>applications<ul>
+<li>FTP, SMTP, HTTP</li>
+</ul>
+</li>
+<li>transport: process-process data<br>transfer<ul>
+<li>TCP, UDP</li>
+</ul>
+</li>
+<li>network: routing of datagrams from<br>source to destination<ul>
+<li>IP, routing protocols</li>
+</ul>
+</li>
+<li>link: data transfer between<br>neighboring network elements<ul>
+<li>Ethernet, 802.111 (wifi), PPP</li>
+</ul>
+</li>
+<li>physical: bits “on the wire”</li>
+<li>presentation: allow applications<br>to interpret meaning of data,<ul>
+<li>e.g., encryption, compression,<br>machine-specific conventions</li>
+</ul>
+</li>
+<li>session: synchronization,<br>checkpointing, recovery of data<br>exchange</li>
+<li>Internet stack “missing” these<br>layers!<ul>
+<li>these services, if needed, must be<br>implemented in application</li>
+</ul>
+</li>
+</ul>
+<h3 id="Packege-encapsulatioin"><a href="#Packege-encapsulatioin" class="headerlink" title="Packege encapsulatioin"></a>Packege encapsulatioin</h3><p><img src="/img/my24.png" alt="my24"></p>
+<p>Routers and link-layer switches are both packet switches. Similar to end systems, routers and link-layer switches organize their networking hardware and software into layers, they implement only th ebottom layers. As figure abouve, link-layer switches implement layer 1 and 2; routers implement layer 1 through 3.</p>
+<h2 id="Application-layer"><a href="#Application-layer" class="headerlink" title="Application layer"></a>Application layer</h2><p>How process on two different end systems communicates with each other? <br><br>Answer: by exchanging messages across the computer network. The figure (five-layer stack) above illustrates that processes communicating messages. A process sends messages into, and receives messages from, the network through a software interface called a <strong>socket</strong>.</p>
+<p><img src="/img/my25.jpg" alt="my25"></p>
+<p>The application developer has control of everything on the application-layer side of the socket but has little control of the transport-layer side of the socket. The only control that the application developer has on the transport-layer side is:</p>
+<ul>
+<li>the choice of transport protocol</li>
+<li>perhaps the ability to fix a few transport-layer parameters such as maximum buffer and maximum segment sizes</li>
+</ul>
+<p><strong>A socket</strong> is the interface between the application process and the transport-layer protocol. </p>
+<h2 id="Transport-protocol"><a href="#Transport-protocol" class="headerlink" title="Transport protocol"></a>Transport protocol</h2><p><strong>Transport protocol</strong> depend reliable data transfer, throughput, timing security. </p>
+<ul>
+<li>reliable data transfer: loss-tolerance.</li>
+<li>throughput: because other sessions will be sharing the bandwidth along the network path, and because these other sessions will be coming and going, the avalibale throughput can fluctuate with time.</li>
+<li>timing: comes with many shapes and forms. An example guarantee might be that every bit that the sender pumps into the socket arrives at the reciever’s socket no more than 100 msec later.</li>
+<li>security: encrypt all data during sending process, decrpt all data at recieving side.</li>
+</ul>
+<h3 id="Two-transport-rotocol-TCP-and-UDP"><a href="#Two-transport-rotocol-TCP-and-UDP" class="headerlink" title="Two transport rotocol (TCP and UDP)"></a>Two transport rotocol (TCP and UDP)</h3><p><strong>TCP</strong>: includes a connection-oriented service and a reliable data transfer service. </p>
+<ul>
+<li><strong>connection-oriented service</strong> means TCP provides handshaking procedure alerts the client and server before application-level messages begin to flow. After the handshaking phase, a <strong>TCP connection</strong> is said to exist between the sockets of the two processes. </li>
+<li><strong>Reliable data transfer service</strong> means deliver data without error and in the proper order.</li>
+<li><strong>Congetion-control mechanism</strong> means throttle a sending processes when the network is congested between sender and receiver.</li>
+</ul>
+<p><strong>UDP</strong>: a no-frills, lightweight transport protocol, providing minimal services. It has no handshaking, provides an reliable data transfer service and doesn’t include a congestion-control mechanism.</p>
+<p><em>Both of TCP and UDP don’t provide any encryption.</em></p>
+<h2 id="Application-Layer-Protocols"><a href="#Application-Layer-Protocols" class="headerlink" title="Application-Layer Protocols"></a>Application-Layer Protocols</h2><p>We know that network processes communicate with each other by sending messages into sockets. But how are these messages structured?</p>
+<p>An <strong>application-layer protocol</strong> defines how an application’s processes, running on different end systems, pass messages to each other. It defines:</p>
+<ul>
+<li>The types of messages exchanged, for example, request messages and response messages.</li>
+<li>The syntax of the various message types, such as the fields in the message and how the fields are<br>delineated.</li>
+<li>The semantics of the fields, that is, the meaning of the information in the fields.</li>
+<li>Rules for determining when and how a process sends messages and responds to messages.</li>
+</ul>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Run Zeng</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Be my own hero. Never never never give up...</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/computer-network-protocol/"># computer network, protocol</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/05/28/comNet2/">Packet-Switched Networks Delay</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Run Zeng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

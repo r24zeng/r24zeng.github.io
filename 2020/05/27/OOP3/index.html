@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Run Zeng">
+
+
+    <meta name="subtitle" content="Welcome to my blog">
+
+
+
+
+<title>Object-oriented Programming - Modularization | Run Zeng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Run Zeng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Run Zeng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Object-oriented Programming - Modularization</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Run Zeng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">May 27, 2020&nbsp;&nbsp;0:00:22</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/notes/">notes</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <blockquote>
+<p><code>.cpp</code> - source file <br><br><code>.h</code> - header file <br><br><code>.o</code> - object file <br><br><code>prog</code> - executable file/taget file <br></p>
+</blockquote>
+<p><img src="/img/my10.jpg" alt="C++ build process: different CPU will create different assmbly code; object code is binary mathine language"></p>
+<h3 id="Key-word-extern"><a href="#Key-word-extern" class="headerlink" title="Key word: extern"></a>Key word: extern</h3><p>eg,<code>extern int b;</code> <br><br>This is an non-local decorator, compiler goes to other soure files to search the variable <code>b</code>.</p>
+<h2 id="How-to-do-modularization-for-different-cases"><a href="#How-to-do-modularization-for-different-cases" class="headerlink" title="How to do modularization for different cases?"></a>How to do modularization for different cases?</h2><h3 id="Regular-case"><a href="#Regular-case" class="headerlink" title="Regular case"></a>Regular case</h3><p><img src="/img/my11.jpg" alt="quote example between `A`, `B` and `main.cpp`"></p>
+<h3 id="Header-guard"><a href="#Header-guard" class="headerlink" title="Header guard"></a>Header guard</h3><p><code>#include &quot;headerfile&quot;</code> can’t be duplicated in any two related files. </p>
+<p><strong>Solution:</strong> <br><br>In <code>c.h</code> file, define</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> C_H</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> C_H</span></span><br><span class="line">......</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>No matter which file defines this header file, if duplicated then just ignore instead of error.</p>
+<p><img src="/img/my12.jpg" alt="my12"></p>
+<h3 id="Circular-dependencies"><a href="#Circular-dependencies" class="headerlink" title="Circular dependencies"></a>Circular dependencies</h3><p><img src="/img/my13.jpg" alt="my13"></p>
+<p><strong>Solution:</strong> pre-prototype, using <code>For</code> decoration, define <code>class F</code> in <code>E.h</code> and define class E in <code>f.h</code>. Then the compiler knows <code>class F</code> wil be defined later in <code>F.h</code> and <code>class E</code> will be defined later in <code>E.h</code>.</p>
+<h3 id="Watch-out"><a href="#Watch-out" class="headerlink" title="Watch out:"></a>Watch out:</h3><ul>
+<li><strong>Never</strong> place <code>using namespace</code> in header file, which is only used in source code(<code>.cpp</code>).</li>
+<li><strong>never</strong> palce <code>using namespace</code> before <code>#include</code>.</li>
+</ul>
+<h3 id="Difference-bettween-include-quot-•-quot-and-include-lt-•-gt"><a href="#Difference-bettween-include-quot-•-quot-and-include-lt-•-gt" class="headerlink" title="Difference bettween #include &quot;•&quot; and #include &lt;•&gt;"></a>Difference bettween <code>#include &quot;•&quot;</code> and <code>#include &lt;•&gt;</code></h3><ul>
+<li><code>#include &quot;•&quot;</code>: indicates a path is provided to locate the header file.</li>
+<li><code>#include &lt;•&gt;</code>: indicates that the header file is located in the default library locations defined in the enviromental variables, in IDE settings or operation settings.</li>
+</ul>
+<h2 id="Compile-methods"><a href="#Compile-methods" class="headerlink" title="Compile methods"></a>Compile methods</h2><h3 id="simple-struct-of-compile-files"><a href="#simple-struct-of-compile-files" class="headerlink" title="simple struct of compile files"></a>simple struct of compile files</h3><p><img src="/img/my14.jpg" alt="compile linux command: `g++ -o prog main.cpp A.cpp`, then create an executable file `prog.o`, run it `/prog.o`"></p>
+<h3 id="more-complicated-makefile"><a href="#more-complicated-makefile" class="headerlink" title="more complicated: makefile"></a>more complicated: makefile</h3><blockquote>
+<p><code>make</code> is a Linux command<br><img src="/img/my15.jpg" alt="Example of a makefile: first row is which files link to the target direclty, seconde row is the Linux command. `g++` is compiler, `-g` is to start debug mode, `-Wall` is to show all warnings during compile, following files are to linke in order, `-o` is output, last file is the name of target to execute later."></p>
+</blockquote>
+<p>Some options:</p>
+<ul>
+<li>-g - turn on debugging (so GDB gives more friendly output)</li>
+<li>-Wall - turns on most warnings</li>
+<li>-O or -O2 - turn on optimizations</li>
+<li>-o <name> - name of the output file</li>
+<li>-c - output an object file (.o)</li>
+<li>-I<include path> - specify an include directory</li>
+<li>-L<library path> - specify a lib directory</li>
+<li>-l<library> - link with library lib<library>.a</li>
+</ul>
+<h3 id="Simplify-makefile"><a href="#Simplify-makefile" class="headerlink" title="Simplify makefile"></a>Simplify makefile</h3><ul>
+<li>remove abvious dependency </li>
+<li>only keep one line of build rule, other same build rules are redundant</li>
+<li>omit target name which is duplicated </li>
+</ul>
+<p>The cleanest version is:<br><img src="/img/my16.jpg" alt="simplest version"></p>
+<h3 id="Advanced-version"><a href="#Advanced-version" class="headerlink" title="Advanced version"></a>Advanced version</h3><blockquote>
+<p>Build compile rule with self-define variables</p>
+</blockquote>
+<p><em>Caution: be careful TAB, space is not necessary, which is just for better formatting.</em><br>For example:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">CXX = g++ <span class="comment">// CXX is self-defined variable, and g++ is the value. This line is to define the compiler tool</span></span><br><span class="line">CXXFLAGS = -g -Wall <span class="comment">// specify flags</span></span><br><span class="line">OBJECTS = main.o A.o B.o <span class="comment">// spcify object files in order</span></span><br><span class="line">EXEC = prog <span class="comment">// specify the name of executable file</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//  $&#123;&#125; is the format to replace content by variables</span></span><br><span class="line">$&#123;EXEC&#125; : $&#123;OBJECT&#125;</span><br><span class="line">    $&#123;CXX&#125; $&#123;CXXFLAGS&#125; $&#123;OBJECTS&#125; -o $&#123;EXEC&#125;  <span class="comment">// build the compile rule</span></span><br><span class="line"></span><br><span class="line">main.o : A.h</span><br><span class="line">A.o : B.h</span><br><span class="line">B.o : A.h</span><br><span class="line"></span><br><span class="line">clean :  <span class="comment">// when you want to make change about the dependency, you have to recompile, then you should delete the objects and target first, so this line is always added at the end of makefile</span></span><br><span class="line">    rm -rf $&#123;OBJECTS&#125; $&#123;EXEC&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>If we want to make change to the content of building rule, just change the value of the variables instead of changing rules, because the building rule is generally provided in large project by company</strong></p>
+<h3 id="Evolutionary-version"><a href="#Evolutionary-version" class="headerlink" title="Evolutionary version"></a>Evolutionary version</h3><blockquote>
+<p>Adding auto dependency</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">CXX = g++</span><br><span class="line">CXXFLAGS = -g -Wall -MMD <span class="comment">// MMD builds dependency list in .d file</span></span><br><span class="line">OBJECTS = main.o A.o B.o</span><br><span class="line">DEPENDS = $&#123;OBJECTS:.o=.d&#125; <span class="comment">// subtitute .o with .d for dependency files, .d file is autogenerated from .o file by compiler. Compiler is smart, it figures out the dependency.</span></span><br><span class="line">EXEC = prog</span><br><span class="line"></span><br><span class="line">$&#123;EXEC&#125; : $&#123;OBJECTS&#125;</span><br><span class="line">    $&#123;CXX&#125; $&#123;CXXFLAGS&#125; $&#123;OBJECTS&#125; -o $&#123;EXEC&#125; </span><br><span class="line"></span><br><span class="line">clean:</span><br><span class="line">    rm -rf &#123;DEPENDS&#125; &#123;OBJECTS&#125; &#123;EXEC&#125;</span><br><span class="line"></span><br><span class="line">-include $&#123;DEPENDS&#125; <span class="comment">// read .d files for returning autogenerated dependencies</span></span><br></pre></td></tr></table></figure>
+<h2 id="Run-command"><a href="#Run-command" class="headerlink" title="Run command"></a>Run command</h2><p><code>make</code> - compile whole project by makefile, which refers to default implementation in <strong>Linux</strong>. <br><br><code>gmake</code> - compile whole project by makefile, which refers to <strong>Gun make</strong> in <strong>Unix</strong>. <br><br><code>make clean</code> - execute <code>clean</code> line of makefile.</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Run Zeng</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Be my own hero. Never never never give up...</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/c-OOP-makefile/"># c++, OOP, makefile</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/05/28/comNet1/">Introduction of Computer Network</a>
+            
+            
+            <a class="next" rel="next" href="/2020/05/21/OOP2/">Object-oriented Programming - Special member functions</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Run Zeng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
