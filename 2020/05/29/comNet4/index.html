@@ -259,6 +259,9 @@
 <p>SMTP commands include <em>HELO, MAIL, FROM, RCPT TO, DATA, CRLF.CRLF, QUIT</em>.</p>
 <p>If reciever’s server is down, the mail remains in sender’s mail server and waits for a new attempt.</p>
 <p>Note that Bob’s user agent can’t use SMTP to obtain the messages because obtaining the message is a pull operation, whereas SMTP is a push protocol. So Bob needs a mail access protocol that transfers messages from Bob’s mail server to his local PC (protocols such as POP3, IMAP and HTTP). <br></p>
+<p><strong>POP3</strong>: It has three phases: authorization, transaction and update. It uses four commands: <em>list, retr, dele and quit</em>. in order to avoid the download-and-delete mode so as to Bob can read the email from different PC, in download-and-keep mode, the user agent leaves the messages on the mail server after downloading them.</p>
+<p><strong>IMAP</strong>: Unlike POP3, an IMAP server maintains user state information across IMAP sessions - for example, the names of the folders and which messages are associated with which folders. It allows user to maintain a folder hierarchy on a remote server that can be accessed from any computer.</p>
+<p><strong>HTTP</strong>: If A sends email from its browser to her mail server, HTTP protocol will be preferred.</p>
 <p>Linux/Unix E-mail code demo:<br><img src="/img/my38.png" alt="The host name of the client is &quot;crepes.fr&quot;, the hostname of the server is &quot;mxer.uwaterloo.ca&quot;, mail port is generally &quot;25&quot;."></p>
 <h2 id="Comparison-of-HTTP-and-SMTP"><a href="#Comparison-of-HTTP-and-SMTP" class="headerlink" title="Comparison of HTTP and SMTP:"></a>Comparison of HTTP and SMTP:</h2><p>HTTP: pull (mostly). <br><br>SMTP: push. <br></p>
 <p>HTTP: any data type. <br><br>SMTP: each message including the body of each message, to be in 7-bit ASCII fomat. <br></p>
