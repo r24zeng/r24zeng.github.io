@@ -232,6 +232,7 @@
 </ul>
 <p>which chunk of file should be responded, master server doesn’t store real data, only store meta data, also called name server, know which chunk server stores the chunk of file. In the chunk server, there are replication on chunk server, at least one another chunk server replicate files. Only primary chunk server answers the request from client, if primary chunk server down, the request goes to replicated chunk server. Eg. client “write” action happends, master server send back the index, client find the primary chunk server according to index, when done, the primary chunk server updates all replication on other chunck servers.</p>
 <p>cluster helps files locate to chunk servers. </p>
+<p><em>Reference material:  <br><br>Lectures: University of Waterloo, CS 454/654 (Distributed System), 2020 winter term, Professor Khuzaima Daudjee.</em></p>
 
         </div>
 

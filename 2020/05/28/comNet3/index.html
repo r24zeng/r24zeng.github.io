@@ -232,20 +232,39 @@
 </ul>
 <h3 id="Packege-encapsulatioin"><a href="#Packege-encapsulatioin" class="headerlink" title="Packege encapsulatioin"></a>Packege encapsulatioin</h3><p><img src="/img/my24.png" alt="my24"></p>
 <p>Routers and link-layer switches are both packet switches. Similar to end systems, routers and link-layer switches organize their networking hardware and software into layers, they implement only th ebottom layers. As figure abouve, link-layer switches implement layer 1 and 2; routers implement layer 1 through 3.</p>
-<h2 id="Application-layer"><a href="#Application-layer" class="headerlink" title="Application layer"></a>Application layer</h2><p>How process on two different end systems communicates with each other? <br><br>Answer: by exchanging messages across the computer network. The figure (five-layer stack) above illustrates that processes communicating messages. A process sends messages into, and receives messages from, the network through a software interface called a <strong>socket</strong>.</p>
+<h2 id="What-an-engineer-can-do-to-create-a-network-application"><a href="#What-an-engineer-can-do-to-create-a-network-application" class="headerlink" title="What an engineer can do to create a network application?"></a>What an engineer can do to create a network application?</h2><blockquote>
+<p>Engineer has only control of designing applicatioin layer and choosing the transport protocol. Application layer protocol is about encapsulating message, transport protocol is about how to transport all data. Sockets are the doors before the client’s data transport and the server’s acception. </p>
+</blockquote>
+<p>Two structure of application:</p>
+<ul>
+<li>Client-Server: <strong>server</strong> always-on host, has permanent IP address, may have data center for scaling. <strong>client</strong> only communicate with server but not commuicate with other clients, may has dynamic IP.</li>
+<li>Peer-to-Peer(P2P): can be server or client, communcate with each other directly, self-scalability as introducing new peers. So the management is complex.</li>
+</ul>
+<p>In order to address the sender and reciever, we should put the IP address in the message. But only IP adress is not enough, because one host may have several ports. Therefore, <strong>identifier</strong> includes IP address and port number. For example, <em>IP adress: 128.119.245.12, port number: 80</em>.</p>
+<p>No need to write software for network-core devices because network-core devices don’t run user applications. So we are going to forcus the discuss about network-edge communication.</p>
+<h2 id="Application-layer"><a href="#Application-layer" class="headerlink" title="Application layer"></a>Application layer</h2><p>Communication happends between processes. Two situcaitons: one happens between processes on one host using inner-process communication (defined by OS); the other happens between processes on dfferent hosts by exchanging messages, which we will forcus on. Exchanging messages involve packeting message and tranporting message, which refer to application layer protocols and transport protocols respectively.</p>
+<p>How process on two different end systems communicates with each other? <br><br>Answer: by exchanging messages across the computer network. The figure (five-layer stack) above illustrates that processes communicating messages. A process sends messages into, and receives messages from, the network through a software interface called a <strong>socket</strong>.</p>
 <p><img src="/img/my25.jpg" alt="my25"></p>
 <p>The application developer has control of everything on the application-layer side of the socket but has little control of the transport-layer side of the socket. The only control that the application developer has on the transport-layer side is:</p>
 <ul>
-<li>the choice of transport protocol</li>
-<li>perhaps the ability to fix a few transport-layer parameters such as maximum buffer and maximum segment sizes</li>
+<li>the choice of transport protocol.</li>
+<li>perhaps the ability to fix a few transport-layer parameters such as maximum buffer and maximum segment sizes.</li>
 </ul>
-<p><strong>A socket</strong> is the interface between the application process and the transport-layer protocol. </p>
+<p><img src="/img/my26.jpg" alt="my26"><br><strong>A socket</strong> is the interface between the application process and the transport-layer protocol. Generally to say, no matter you send data or recieve the data, data has to go through the door. Because sockets build the connection between the client and server.</p>
+<h2 id="Application-Layer-Protocols"><a href="#Application-Layer-Protocols" class="headerlink" title="Application-Layer Protocols"></a>Application-Layer Protocols</h2><p>We know that network processes communicate with each other by sending messages into sockets. But how are these messages structured?</p>
+<p>An <strong>application-layer protocol</strong> defines how an application’s processes, running on different end systems, pass messages to each other. It defines:</p>
+<ul>
+<li><strong>The types of messages exchanged</strong>, for example, request messages and response messages.</li>
+<li><strong>message syntax</strong>, such as the fields in the message and how the fields are<br>delineated.</li>
+<li><strong>message semantics</strong>, that is, the meaning of the information in the fields.</li>
+<li><strong>rules</strong> for determining when and how a process sends messages and responds to messages.</li>
+</ul>
 <h2 id="Transport-protocol"><a href="#Transport-protocol" class="headerlink" title="Transport protocol"></a>Transport protocol</h2><p><strong>Transport protocol</strong> depend reliable data transfer, throughput, timing security. </p>
 <ul>
-<li>reliable data transfer: loss-tolerance.</li>
-<li>throughput: because other sessions will be sharing the bandwidth along the network path, and because these other sessions will be coming and going, the avalibale throughput can fluctuate with time.</li>
-<li>timing: comes with many shapes and forms. An example guarantee might be that every bit that the sender pumps into the socket arrives at the reciever’s socket no more than 100 msec later.</li>
-<li>security: encrypt all data during sending process, decrpt all data at recieving side.</li>
+<li><strong>reliable data transfer</strong>: loss-tolerance.</li>
+<li><strong>throughput</strong>: because other sessions will be sharing the bandwidth along the network path, and because these other sessions will be coming and going, the avalibale throughput can fluctuate with time.</li>
+<li><strong>timing</strong>: comes with many shapes and forms. An example guarantee might be that every bit that the sender pumps into the socket arrives at the reciever’s socket no more than 100 msec later.</li>
+<li><strong>security</strong>: encrypt all data during sending process, decrpt all data at recieving side.</li>
 </ul>
 <h3 id="Two-transport-rotocol-TCP-and-UDP"><a href="#Two-transport-rotocol-TCP-and-UDP" class="headerlink" title="Two transport rotocol (TCP and UDP)"></a>Two transport rotocol (TCP and UDP)</h3><p><strong>TCP</strong>: includes a connection-oriented service and a reliable data transfer service. </p>
 <ul>
@@ -254,15 +273,9 @@
 <li><strong>Congetion-control mechanism</strong> means throttle a sending processes when the network is congested between sender and receiver.</li>
 </ul>
 <p><strong>UDP</strong>: a no-frills, lightweight transport protocol, providing minimal services. It has no handshaking, provides an reliable data transfer service and doesn’t include a congestion-control mechanism.</p>
-<p><em>Both of TCP and UDP don’t provide any encryption.</em></p>
-<h2 id="Application-Layer-Protocols"><a href="#Application-Layer-Protocols" class="headerlink" title="Application-Layer Protocols"></a>Application-Layer Protocols</h2><p>We know that network processes communicate with each other by sending messages into sockets. But how are these messages structured?</p>
-<p>An <strong>application-layer protocol</strong> defines how an application’s processes, running on different end systems, pass messages to each other. It defines:</p>
-<ul>
-<li>The types of messages exchanged, for example, request messages and response messages.</li>
-<li>The syntax of the various message types, such as the fields in the message and how the fields are<br>delineated.</li>
-<li>The semantics of the fields, that is, the meaning of the information in the fields.</li>
-<li>Rules for determining when and how a process sends messages and responds to messages.</li>
-</ul>
+<p>Both of TCP and UDP don’t provide any encryption. Then <strong>SSL</strong> protocol was proposed to provide end-point authenication (provided encrypted TCP connection). It’s at application layer. Apps use <strong>SSL</strong> libraries to “talk” to TCP. </p>
+<p>Conclusion: application protocol is responsible of defining messages, but transport protocol is only responsible of defining the transport action.</p>
+<p><em>Reference material:  <br><br>Book: Computer Networking A Top-Down Approach 7th edition, Jim Kurose &amp; Keith Ross, Addison-Wesley.<br><br>Slides: University of Waterloo, ECE 456/656 (Computer Networks), 2020 spring term, Professor Zille Huma Kamal.</em></p>
 
         </div>
 
@@ -303,6 +316,8 @@
             </div>
         </section>
         <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/05/29/comNet4/">comNet4</a>
             
             
             <a class="next" rel="next" href="/2020/05/28/comNet2/">Packet-Switched Networks Delay</a>

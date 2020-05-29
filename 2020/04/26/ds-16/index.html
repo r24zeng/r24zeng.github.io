@@ -238,6 +238,7 @@
 <li>eager/synchronous replication: if you do transaction on one copy, all conpies will be updated imediately. (1) expensive commit. One transaction, update all copies, then commit transactions on all copies. (2) when transaction is long-lined. One transaction takes long time during one copy, after while, when apply to another copy, the copy isn’t avalibale at this time, then replication skip it. The replication fail. (3) update everything at once. If one copy is down, you can’t be synchronous. You can wait or abort and start transaction again.</li>
 <li>lazy/asynchronous replication: if transaction on one copy, it only updates one master copy. If one copy fails, transaction applies to another copy. If one large transaction, you break it into many small transactions on different copies. Long-lined transaction problem is solved. If one copy is not avalibale, you work on another cocpy. Weak: transaction 1 on copy A, transaction 2 can only apply on copy B, at the end, you want to merge two transactions on A and B. On A, T1 - T2. On B, T2 - T1. The merge order on two copies is different. Solution: one copy must be master copy. Then A and B know apply which transaction first.</li>
 </ul>
+<p><em>Reference material:  <br><br>Lectures: University of Waterloo, CS 454/654 (Distributed System), 2020 winter term, Professor Khuzaima Daudjee.</em></p>
 
         </div>
 

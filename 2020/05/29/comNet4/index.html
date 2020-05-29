@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Run Zeng">
+
+
+    <meta name="subtitle" content="Welcome to my blog">
+
+
+
+
+<title>comNet4 | Run Zeng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Run Zeng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Run Zeng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">comNet4</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Run Zeng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">May 29, 2020&nbsp;&nbsp;12:36:30</a>
+                        </span>
+                    
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>— Web and E-mail principle<br>tags: computer network, protocol, web, email, cookie<br>categories: notes</p>
+<hr>
+<blockquote>
+<p>Web uses defualt persistent HTTP (application protocol) on TCP (transport protocol); E-mail uses defualt persistent SMTP (application protocol) on TCP (transport protocol).</p>
+</blockquote>
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><p>Web page consists of objects. They are referenced by URL, eg, *<a href="http://www.someschool.edu" target="_blank" rel="noopener">www.someschool.edu</a> (host) / someDept/pic.gif (path name)</p>
+<h3 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a>HTTP</h3><blockquote>
+<p>Full name is Hypertext transfer protocol. It’s an application layer protocol.</p>
+</blockquote>
+<p>HTTP includes HTTP request and HTTP response, which consists of head lines and body lines.</p>
+<p><img src="/img/my27.jpg" alt="HTTP request format, `\r\n` means one line ends, empty line with `\r\n` means message ends"></p>
+<p>** HTTP request method types**: Common used (HTTP/1.1 version): GET (empty body, appends URL to get page from server), POST (fills body field, sends data to server), HEAD (request the head fields from server), the three are also in HTTP/1.0. PUT and DELETE.</p>
+<p><strong>HTTP/1.0</strong>: first version of HTTP, non-presistent HTTP. <br><br><strong>HTTP/1.1</strong>: second version of HTTP, presistent HTTP. Default exchanging message by pipline (after handshaking and one base page round, can send all objects back-to-bcak, also recieve them back-to-back, save time). It also can set non-pipline, which means send one object in one round continuously.</p>
+<p><img src="/img/my29.jpg" alt="HTTP response format"></p>
+<p>HTTP process using TCP between client and server overview:</p>
+<ul>
+<li>client initiates TCP connection (creates socket) to server, port 80</li>
+<li>server accepts TCP connection from client</li>
+<li>HTTP messages (application-layer protocol<br>messages) exchanged between browser (HTTP</li>
+<li>TCP connection closed</li>
+</ul>
+<p><strong>Sample code</strong>:</p>
+<ul>
+<li>200 OK<ul>
+<li>request succeeded, requested object later in this msg</li>
+</ul>
+</li>
+<li>301 Moved Permanently<ul>
+<li>requested object moved, new location specified later in this msg</li>
+</ul>
+</li>
+<li>400 Bad Request<ul>
+<li>request msg not understood by server</li>
+</ul>
+</li>
+<li>404 Not Found<ul>
+<li>requested document not found on this server</li>
+</ul>
+</li>
+<li>505 HTTP Version Not Supported</li>
+</ul>
+<p><strong>Non-presistent HTTP/1.0</strong>: <br><br>TCP connection closes after 2RTT.<br><img src="/img/my30.jpg" alt="**RTT** is the time for a small packet to travel from client to server and back. In this case, total response time is (2RTT + 1 file transmission time), after this object, the TCP connection closes. Adding one more object will take (2RTT + transmission time), web page doesn&#39;t need too much tansmission time"></p>
+<p><strong>Non-presistent HTTP/1.0 with <code>n</code> parallel TCP connections</strong>: <br><br>TCP connection closes after 2RTT.<br><img src="/img/my33.jpg" alt="If request 6 objects, 3 parallel connections, then (2RTT) for web page, (2RTT) for 3 object, so (6RTT + 2 file transmission time) in total"></p>
+<p><strong>Presistent HTTP/1.1 without pipeline</strong>: <br><br>TCP connection closes after all objects sent.<br>subsequent HTTP messages between same client/server sent over open connection. Response time is (RTT+transmission time) per object except the first one - web page (takes 2RTT).</p>
+<p><img src="/img/my31.jpg" alt="If request 8 objects, then (2RTT) for web page, (1RTT + transmission time) for each object, so (10RTT + 8 file transmission time) in total"></p>
+<p><strong>Presistent HTTP/1.1 with pipeline</strong>: Connection keeps open until all objects sent.  also after web page (first tell the server how many and what objects I need to a specific URL), objects can be sent back-to-back (no need to wait for response).<br><img src="/img/my32.jpg" alt="If request 8 objects, then (2RTT) for web page, (1RTT) for 8 object, so (3RTT + 1 file transmission time) in total"></p>
+<p>This method causes HDL blocking problem. If one object has error or cruption, other objects are stuck. Then another method called <em>HTTP/2.0 (multiplexing request/response)</em> is proposed. The objects will be sent by server out of order and don’t wait when error happen.</p>
+<p><strong>HTTP is stateless: server maintains no information about the past client requests. This is why some webs use cookies.</strong></p>
+<h3 id="Cookies"><a href="#Cookies" class="headerlink" title="Cookies:"></a>Cookies:</h3><p>Four components:</p>
+<ol>
+<li>cookie header line of HTTP response<br>message</li>
+<li>cookie header line in next HTTP request<br>message</li>
+<li>cookie file kept on users host, managed<br>by users browser</li>
+<li>back-end database at Web site</li>
+</ol>
+<p><img src="/img/my35.jpg" alt="regular cookie example. 第一次访问时，server给这个用户建一个ID缓存，下次要用时发送请求直接附加上用户缓存ID"></p>
+<h3 id="Web-caches-proxy-server"><a href="#Web-caches-proxy-server" class="headerlink" title="Web caches (proxy server)"></a>Web caches (proxy server)</h3><p>一旦用户已经有缓存ID了，那么中间就相当于有一个代理服务器，用户发送请求先到达代理服务器，若数据存在则直接返回给用户，若不存在再由代理服务器发送请求至原服务器，原服务器返回给代理服务器，代理服务器缓存数据，并最终返回给用户。主要优点：节约时间，减少拥堵。</p>
+<p>Linux/Unix HTTP client-server interface code demo:<br><img src="/img/my34.jpg" alt="Run on my Mac Unix"></p>
+<h2 id="E-mail"><a href="#E-mail" class="headerlink" title="E-mail"></a>E-mail</h2><blockquote>
+<p>User agent, mail server, simple mail transfer protocol <strong>SMTP</strong> (application layer protocol) with <strong>TCP</strong> (transport protocol).</p>
+</blockquote>
+<p>Three phases of transfer: handshaking, transfer of messages, closure. Message must be in 7-bit ASCII <strong>(Very different from HTTP, HTTP can transfer any type of data)</strong>. <strong>SMTP</strong> uses presistent connections.</p>
+<p><img src="/img/my37" alt="Whole process of A sending email to B"></p>
+<p>Linux/Unix E-mail code demo:<br><img src="/img/my38.png" alt="my38"></p>
+<h2 id="Comparison-of-HTTP-and-SMTP"><a href="#Comparison-of-HTTP-and-SMTP" class="headerlink" title="Comparison of HTTP and SMTP:"></a>Comparison of HTTP and SMTP:</h2><p>HTTP: pull (mostly) <br><br>SMTP: push <br></p>
+<p>HTTP: each object encapsulated in its own<br>response message <br><br>SMTP: multiple objects sent in multipart message</p>
+<p><em>Reference material:  <br><br>Book: Computer Networking A Top-Down Approach 7th edition, Jim Kurose &amp; Keith Ross, Addison-Wesley.<br><br>Slides: University of Waterloo, ECE 456/656 (Computer Networks), 2020 spring term, Professor Zille Huma Kamal.</em></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Run Zeng</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Be my own hero. Never never never give up...</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/05/28/comNet3/">Protocol Layers</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Run Zeng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
