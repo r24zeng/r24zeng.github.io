@@ -250,15 +250,19 @@
 </ol>
 <p><img src="/img/my35.jpg" alt="regular cookie example. 第一次访问时，server给这个用户建一个ID缓存，下次要用时发送请求直接附加上用户缓存ID"></p>
 <h3 id="Web-caches-proxy-server"><a href="#Web-caches-proxy-server" class="headerlink" title="Web caches (proxy server)"></a>Web caches (proxy server)</h3><p>一旦用户已经有缓存ID了，那么中间就相当于有一个代理服务器，用户发送请求先到达代理服务器，若数据存在则直接返回给用户，若不存在再由代理服务器发送请求至原服务器，原服务器返回给代理服务器，代理服务器缓存数据，并最终返回给用户。主要优点：节约时间，减少拥堵。</p>
-<p>Linux/Unix HTTP client-server interface code demo:<br><img src="/img/my34.jpg" alt="Run on my Mac Unix"></p>
+<p>Linux/Unix HTTP client-server interface code demo:<br><img src="/img/my34.jpg" alt="Run on my Mac Unix. The web port is generally &quot;80&quot;."></p>
 <h2 id="E-mail"><a href="#E-mail" class="headerlink" title="E-mail"></a>E-mail</h2><blockquote>
 <p>User agent, mail server, simple mail transfer protocol <strong>SMTP</strong> (application layer protocol) with <strong>TCP</strong> (transport protocol).</p>
 </blockquote>
 <p>Three phases of transfer: handshaking, transfer of messages, closure. Message must be in 7-bit ASCII <strong>(Very different from HTTP, HTTP can transfer any type of data)</strong>. <strong>SMTP</strong> uses presistent connections.</p>
 <p><img src="/img/my37" alt="Whole process of A sending email to B"></p>
-<p>Linux/Unix E-mail code demo:<br><img src="/img/my38.png" alt="my38"></p>
-<h2 id="Comparison-of-HTTP-and-SMTP"><a href="#Comparison-of-HTTP-and-SMTP" class="headerlink" title="Comparison of HTTP and SMTP:"></a>Comparison of HTTP and SMTP:</h2><p>HTTP: pull (mostly) <br><br>SMTP: push <br></p>
-<p>HTTP: each object encapsulated in its own<br>response message <br><br>SMTP: multiple objects sent in multipart message</p>
+<p>SMTP commands include <em>HELO, MAIL, FROM, RCPT TO, DATA, CRLF.CRLF, QUIT</em>.</p>
+<p>If reciever’s server is down, the mail remains in sender’s mail server and waits for a new attempt.</p>
+<p>Note that Bob’s user agent can’t use SMTP to obtain the messages because obtaining the message is a pull operation, whereas SMTP is a push protocol. So Bob needs a mail access protocol that transfers messages from Bob’s mail server to his local PC (protocols such as POP3, IMAP and HTTP). <br></p>
+<p>Linux/Unix E-mail code demo:<br><img src="/img/my38.png" alt="The host name of the client is &quot;crepes.fr&quot;, the hostname of the server is &quot;mxer.uwaterloo.ca&quot;, mail port is generally &quot;25&quot;."></p>
+<h2 id="Comparison-of-HTTP-and-SMTP"><a href="#Comparison-of-HTTP-and-SMTP" class="headerlink" title="Comparison of HTTP and SMTP:"></a>Comparison of HTTP and SMTP:</h2><p>HTTP: pull (mostly). <br><br>SMTP: push. <br></p>
+<p>HTTP: any data type. <br><br>SMTP: each message including the body of each message, to be in 7-bit ASCII fomat. <br></p>
+<p>HTTP: each object encapsulated in its own<br>response message. <br><br>SMTP: multiple objects sent in multipart message. <br></p>
 <p><em>Reference material:  <br><br>Book: Computer Networking A Top-Down Approach 7th edition, Jim Kurose &amp; Keith Ross, Addison-Wesley.<br><br>Slides: University of Waterloo, ECE 456/656 (Computer Networks), 2020 spring term, Professor Zille Huma Kamal.</em></p>
 
         </div>
