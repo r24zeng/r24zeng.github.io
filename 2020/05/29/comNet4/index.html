@@ -193,7 +193,8 @@
         </header>
 
         <div class="post-content">
-            <p>— Web and E-mail principle<br>tags: computer network, protocol, web, email, cookie<br>categories: notes</p>
+            <hr>
+<p>title: Web and E-mail principle<br>tags: computer network, protocol, web, email, cookie<br>categories: notes</p>
 <hr>
 <blockquote>
 <p>Web uses defualt persistent HTTP (application protocol) on TCP (transport protocol); E-mail uses defualt persistent SMTP (application protocol) on TCP (transport protocol).</p>
@@ -204,7 +205,7 @@
 </blockquote>
 <p>HTTP includes HTTP request and HTTP response, which consists of head lines and body lines.</p>
 <p><img src="/img/my27.jpg" alt="HTTP request format, `\r\n` means one line ends, empty line with `\r\n` means message ends"></p>
-<p>** HTTP request method types**: Common used (HTTP/1.1 version): GET (empty body, appends URL to get page from server), POST (fills body field, sends data to server), HEAD (request the head fields from server), the three are also in HTTP/1.0. PUT and DELETE.</p>
+<p><strong>HTTP request method types</strong>: Common used (HTTP/1.1 version): GET (empty body, appends URL to get page from server), POST (fills body field, sends data to server), HEAD (request the head fields from server), the three are also in HTTP/1.0. PUT and DELETE.</p>
 <p><strong>HTTP/1.0</strong>: first version of HTTP, non-presistent HTTP. <br><br><strong>HTTP/1.1</strong>: second version of HTTP, presistent HTTP. Default exchanging message by pipline (after handshaking and one base page round, can send all objects back-to-bcak, also recieve them back-to-back, save time). It also can set non-pipline, which means send one object in one round continuously.</p>
 <p><img src="/img/my29.jpg" alt="HTTP response format"></p>
 <p>HTTP process using TCP between client and server overview:</p>
@@ -238,14 +239,14 @@
 <p><strong>Non-presistent HTTP/1.0 with <code>n</code> parallel TCP connections</strong>: <br><br>TCP connection closes after 2RTT.<br><img src="/img/my33.jpg" alt="If request 6 objects, 3 parallel connections, then (2RTT) for web page, (2RTT) for 3 object, so (6RTT + 2 file transmission time) in total"></p>
 <p><strong>Presistent HTTP/1.1 without pipeline</strong>: <br><br>TCP connection closes after all objects sent.<br>subsequent HTTP messages between same client/server sent over open connection. Response time is (RTT+transmission time) per object except the first one - web page (takes 2RTT).</p>
 <p><img src="/img/my31.jpg" alt="If request 8 objects, then (2RTT) for web page, (1RTT + transmission time) for each object, so (10RTT + 8 file transmission time) in total"></p>
-<p><strong>Presistent HTTP/1.1 with pipeline</strong>: Connection keeps open until all objects sent.  also after web page (first tell the server how many and what objects I need to a specific URL), objects can be sent back-to-back (no need to wait for response).<br><img src="/img/my32.jpg" alt="If request 8 objects, then (2RTT) for web page, (1RTT) for 8 object, so (3RTT + 1 file transmission time) in total"></p>
-<p>This method causes HDL blocking problem. If one object has error or cruption, other objects are stuck. Then another method called <em>HTTP/2.0 (multiplexing request/response)</em> is proposed. The objects will be sent by server out of order and don’t wait when error happen.</p>
+<p><strong>Presistent HTTP/1.1 with pipeline</strong>: Connection keeps open until all objects sent.  Also after web page (first tell the server how many and what objects I need to send to a specific URL), objects can be sent back-to-back (no need to wait for response).<br><img src="/img/my32.jpg" alt="If request 8 objects, then (2RTT) for web page, (1RTT) for 8 object, so (3RTT + 1 file transmission time) in total"></p>
+<p>This method causes HDL blocking problem. If one object has error or crash, other objects are stuck. Then another method called <em>HTTP/2.0 (multiplexing request/response)</em> is proposed. The objects will be sent by server out of order and don’t wait when error happens.</p>
 <p><strong>HTTP is stateless: server maintains no information about the past client requests. This is why some webs use cookies.</strong></p>
 <h3 id="Cookies"><a href="#Cookies" class="headerlink" title="Cookies:"></a>Cookies:</h3><p>Four components:</p>
 <ol>
-<li>cookie header line of HTTP response<br>message</li>
-<li>cookie header line in next HTTP request<br>message</li>
-<li>cookie file kept on users host, managed<br>by users browser</li>
+<li>cookie header line of HTTP response message</li>
+<li>cookie header line in next HTTP request message</li>
+<li>cookie file kept on users host, managed by users browser</li>
 <li>back-end database at Web site</li>
 </ol>
 <p><img src="/img/my35.jpg" alt="regular cookie example. 第一次访问时，server给这个用户建一个ID缓存，下次要用时发送请求直接附加上用户缓存ID"></p>
@@ -254,8 +255,8 @@
 <h2 id="E-mail"><a href="#E-mail" class="headerlink" title="E-mail"></a>E-mail</h2><blockquote>
 <p>User agent, mail server, simple mail transfer protocol <strong>SMTP</strong> (application layer protocol) with <strong>TCP</strong> (transport protocol).</p>
 </blockquote>
-<p>Three phases of transfer: handshaking, transfer of messages, closure. Message must be in 7-bit ASCII <strong>(Very different from HTTP, HTTP can transfer any type of data)</strong>. <strong>SMTP</strong> uses presistent connections.</p>
-<p><img src="/img/my37" alt="Whole process of A sending email to B"></p>
+<p>Three phases of transfer: handshaking, transfer of messages, closure. Message must be in 7-bit ASCII (<em>Very different from HTTP, HTTP can transfer any type of data</em>). <strong>SMTP</strong> uses presistent connections.</p>
+<p><img src="/img/my37.jpg" alt="Whole process of A sending email to B"></p>
 <p>SMTP commands include <em>HELO, MAIL, FROM, RCPT TO, DATA, CRLF.CRLF, QUIT</em>.</p>
 <p>If reciever’s server is down, the mail remains in sender’s mail server and waits for a new attempt.</p>
 <p>Note that Bob’s user agent can’t use SMTP to obtain the messages because obtaining the message is a pull operation, whereas SMTP is a push protocol. So Bob needs a mail access protocol that transfers messages from Bob’s mail server to his local PC (protocols such as POP3, IMAP and HTTP). <br></p>
@@ -263,10 +264,15 @@
 <p><strong>IMAP</strong>: Unlike POP3, an IMAP server maintains user state information across IMAP sessions - for example, the names of the folders and which messages are associated with which folders. It allows user to maintain a folder hierarchy on a remote server that can be accessed from any computer.</p>
 <p><strong>HTTP</strong>: If A sends email from its browser to her mail server, HTTP protocol will be preferred.</p>
 <p>Linux/Unix E-mail code demo:<br><img src="/img/my38.png" alt="The host name of the client is &quot;crepes.fr&quot;, the hostname of the server is &quot;mxer.uwaterloo.ca&quot;, mail port is generally &quot;25&quot;."></p>
-<h2 id="Comparison-of-HTTP-and-SMTP"><a href="#Comparison-of-HTTP-and-SMTP" class="headerlink" title="Comparison of HTTP and SMTP:"></a>Comparison of HTTP and SMTP:</h2><p>HTTP: pull (mostly). <br><br>SMTP: push. <br></p>
-<p>HTTP: any data type. <br><br>SMTP: each message including the body of each message, to be in 7-bit ASCII fomat. <br></p>
-<p>HTTP: each object encapsulated in its own<br>response message. <br><br>SMTP: multiple objects sent in multipart message. <br></p>
-<p><em>Reference material:  <br><br>Book: Computer Networking A Top-Down Approach 7th edition, Jim Kurose &amp; Keith Ross, Addison-Wesley.<br><br>Slides: University of Waterloo, ECE 456/656 (Computer Networks), 2020 spring term, Professor Zille Huma Kamal.</em></p>
+<h2 id="Comparison-of-HTTP-and-SMTP"><a href="#Comparison-of-HTTP-and-SMTP" class="headerlink" title="Comparison of HTTP and SMTP:"></a>Comparison of HTTP and SMTP:</h2><p>HTTP: pull (mostly). </p>
+<p>SMTP: push.  <br></p>
+<p>HTTP: any data type. </p>
+<p>SMTP: each message including the body of each message, to be in 7-bit ASCII fomat. </p>
+<p>HTTP: each object encapsulated in its own<br>response message. </p>
+<p>SMTP: multiple objects sent in multipart message. <br></p>
+<p>*Reference material: </p>
+<p>Book: Computer Networking A Top-Down Approach 7th edition, Jim Kurose &amp; Keith Ross, Addison-Wesley.</p>
+<p>Slides: University of Waterloo, ECE 456/656 (Computer Networks), 2020 spring term, Professor Zille Huma Kamal.*</p>
 
         </div>
 
