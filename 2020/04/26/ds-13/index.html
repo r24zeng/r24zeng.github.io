@@ -232,7 +232,9 @@
 <li>election algorithm using a ring</li>
 </ul>
 <p>0 - 1 - 2 - 3 - 4 - 5 - 6 - 7 - 0. Start from “3”, “3” sets time out and know a coordinator die, and puts its own ID on message [3], “4” also puts its own ID on message [3,4], … until “6” passes [3,4,5,6] to “7”, “7” doesn’t response, the message goes to “0”, “0” only recieve [3,4,5,6], then it knows “7” fails, … the message goes to “3”, “3” knows “7” fails as well and pick highest ID as new coordinator. “3” starts to pass message to let everyone know “6” is the new coordinator.</p>
-<p><em>Reference material:  <br><br>Lectures: University of Waterloo, CS 454/654 (Distributed System), 2020 winter term, Professor Khuzaima Daudjee.</em></p>
+<blockquote>
+<p>Reference material:<br>Book: Distributed Systems, Third edition, Version 3.02(2018), Maarten van Steen and Andrew S. Tanenbaum.<br>Lectures: University of Waterloo, CS 454/654 (Distributed System), 2020 winter term, Professor Khuzaima Daudjee.</p>
+</blockquote>
 
         </div>
 
