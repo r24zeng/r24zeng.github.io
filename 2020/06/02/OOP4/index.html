@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Run Zeng">
+
+
+    <meta name="subtitle" content="Welcome to my blog">
+
+
+
+
+<title>Object-oriented Programming - Error Handling | Run Zeng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Run Zeng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Run Zeng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Object-oriented Programming - Error Handling</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Run Zeng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 2, 2020&nbsp;&nbsp;18:14:44</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/notes/">notes</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Error-Raise"><a href="#Error-Raise" class="headerlink" title="Error Raise"></a>Error Raise</h2><p>Assertion: Must <code>#include &quot;assert.h&quot;</code>. If assertion fails, then program abort. We should avoid to use <code>assert</code>, because it leaves no chance to programer to recover.</p>
+<p>Remove preprocessor( assertion ) from code during compiling: <code>g++ -DNDBUG</code>.</p>
+<h2 id="Exception-Handle"><a href="#Exception-Handle" class="headerlink" title="Exception Handle"></a>Exception Handle</h2><blockquote>
+<p>When an error occurs deep in a call stack. If the error can’t be handled, then the entire program will be shut down. In order to avoid that, error handle is important to let program recover when catches the error.</p>
+</blockquote>
+<p><img src="/img/my40.jpg" alt="Error recovery conception: one function fails, it exits current function and returns back to last function to handle this error and last status."></p>
+<p><strong>Exception</strong>: An exception is an object thrown to represent the occurrence of an error. In <em>C++</em>, <strong>catch-try</strong> syntax is applied.</p>
+<p><strong>BDP</strong>: self-defined package exceptions and store exception object on the heap. All exceptions are thrown by exception classes.</p>
+<p><img src="/img/my39.jpg" alt="C++ exception standard library"></p>
+<h3 id="Rational-ADT-Example"><a href="#Rational-ADT-Example" class="headerlink" title="Rational ADT Example:"></a>Rational ADT Example:</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rational</span>&#123;</span>		</span><br><span class="line">    <span class="keyword">public</span>: </span><br><span class="line"> 	<span class="class"><span class="keyword">class</span> <span class="title">DivideByZeroException</span> &#123;</span></span><br><span class="line"> 		<span class="keyword">public</span>: 					</span><br><span class="line">            DivideByZeroException( <span class="keyword">int</span> n ) : numer_(n) &#123;&#125;</span><br><span class="line">            <span class="comment">//accessor</span></span><br><span class="line"> 			<span class="function"><span class="keyword">int</span> <span class="title">numer</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> numer_; &#125;    </span><br><span class="line"> 		<span class="keyword">private</span>: 					</span><br><span class="line">            <span class="keyword">int</span> numer_;     <span class="comment">//exception data</span></span><br><span class="line"> 	&#125;;</span><br><span class="line">…&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Rational r;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">"Enter rational number (a/b): "</span>;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; r;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Rational::DividedByZeroException &amp;e)&#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; e.num() &lt;&lt; <span class="string">"/0 is not a legal denominator value."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>BDP</strong>: Keep exception-safe statements out of the rry-block for optimal performance, such as moving “cout &lt;&lt;” out of <code>try</code>, and keep “cin &gt;&gt;” inside of <code>try</code>.</p>
+<h2 id="Throw-Exception"><a href="#Throw-Exception" class="headerlink" title="Throw Exception"></a>Throw Exception</h2><p><strong>Rethrowing</strong>: when nearest up layer function can’t handle this exception, then throw another exception in order to pass this exception to <code>function()</code> up the call stack by one layer.</p>
+<p><img src="/img/my41.jpg" alt="Rethrowing model"></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">catch</span>(someException &amp;e) &#123; <span class="built_in">cout</span> &lt;&lt; <span class="string">"Exceptioin caught"</span> &lt;&lt; e &lt;&lt; <span class="built_in">endl</span>; <span class="keyword">throw</span>;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>If <code>destructor</code> throws an exception that is not handled locally, the program terminates. Because deconstructor always manages the memory.</p>
+<p>After <code>throw</code>, the program will not continue executing other lines.</p>
+<p><strong>noexcept</strong> Keyword:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">~ Rational() <span class="keyword">noexcept</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">numer</span><span class="params">()</span> <span class="keyword">const</span> <span class="keyword">noexcept</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>C++ 11 exception example</strong>:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Rational</span> <span class="title">final</span>&#123;</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// throw exception</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">DivideByZeroException</span>&#123;</span></span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        DivideByZeroException( <span class="keyword">int</span> n) : numer_(n) &#123;&#125;;</span><br><span class="line">        <span class="function"><span class="keyword">int</span> <span class="title">getNumer</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123;<span class="keyword">return</span> numer_;&#125;</span><br><span class="line">    <span class="keyword">private</span>:</span><br><span class="line">        <span class="keyword">int</span> numer_;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Rational</span><span class="params">(<span class="keyword">int</span> num = <span class="number">0</span>, <span class="keyword">int</span> denom = <span class="number">1</span>)</span></span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Rational::Rational(<span class="keyword">int</span> num, <span class="keyword">int</span> denom) <span class="keyword">throw</span> (<span class="keyword">const</span> <span class="keyword">char</span>*)&#123;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"constructor called."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	rat_ = <span class="keyword">new</span> PImpl;</span><br><span class="line"></span><br><span class="line">	rat_ -&gt; numerator_ = num;</span><br><span class="line">	rat_ -&gt; denominator_ = denom;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(rat_ -&gt; denominator == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// nothing below throw will be executed</span></span><br><span class="line">	    <span class="keyword">throw</span> Rational::DivideByZeroException(num);</span><br><span class="line">	&#125;</span><br><span class="line">	_reduce();	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	Rational a; <span class="comment">//constructor called</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"First Fraction (a/b): "</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; a; <span class="comment">// risky code</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span>(Rational::DivideByZeroException &amp;e)&#123;</span><br><span class="line">	    <span class="built_in">cout</span> &lt;&lt; e.getNumer() &lt;&lt; <span class="string">": Denominator can't be zero!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	    <span class="built_in">cout</span> &lt;&lt; <span class="string">"Terminate the program now ..."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Explaination: When input zero denominator, an exception is throwed from <code>Rational</code> constructor, then catch this exception in <code>main function</code> to do what you want. You may just print some reminder message on screen then abort this program, or use a while loop to recover this exception until correct input format.</p>
+<p><strong>Further example</strong>:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	Rational a; <span class="comment">//constructor called</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"First Fraction (a/b): "</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; a; <span class="comment">// risky code</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span>(Rational::DivideByZeroException &amp;e)&#123;</span><br><span class="line">	    <span class="built_in">cout</span> &lt;&lt; e.getNumer() &lt;&lt; <span class="string">": Denominator can't be zero!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	    <span class="comment">// cout &lt;&lt; "Terminate the program now ..." &lt;&lt; endl;</span></span><br><span class="line">	    <span class="comment">// return -1;</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    	Rational b; <span class="comment">//constructor called</span></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"Second Fraction (a/b): "</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; b; <span class="comment">// risky code</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span>(Rational::DivideByZeroException &amp;e)&#123;</span><br><span class="line">	    <span class="built_in">cout</span> &lt;&lt; e.getNumer() &lt;&lt; <span class="string">": Denominator can't be zero!"</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	    <span class="comment">// cout &lt;&lt; "Terminate the program now ..." &lt;&lt; endl;</span></span><br><span class="line">	    <span class="comment">// return -1;</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">    Rational c;</span><br><span class="line">    c = a + b;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="string">"a + b = "</span> &lt;&lt; c &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Running result</strong>: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">constructor called. </span><br><span class="line">First Fraction (a&#x2F;b): 1&#x2F;0</span><br><span class="line">0: Denominator can&#39;t be zero!</span><br><span class="line">constructor called.</span><br><span class="line">Seconde Fraction (a&#x2F;b): 2&#x2F;0</span><br><span class="line">0: Denominator can&#39;t be zero!</span><br><span class="line">constructor called.</span><br><span class="line">Exception happen: DivideByZeroException raised, program abort...</span><br></pre></td></tr></table></figure>
+<p>Explaination: If we don’t stop program immediately after exception, then the exception raises but continues executing until <code>c = a + b</code>, the program aborts. Because <code>c = a + b</code> invokes <code>Rational constructor</code>, exception is raised in the constructor, it happens on the top layer, so our program stops immediately. As the constructor we defined above, Under this situcaiton, <code>a</code> and <code>b</code> have been modified before <code>throw</code> and passed to <code>c</code>, this is bad. So for <em>BDP</em>, we shouldn’t assgin <code>num</code> and <code>denomin</code> to <code>a</code> and <code>b</code> before we know they are legal. It can changed to below code:</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Rational::Rational(<span class="keyword">int</span> num, <span class="keyword">int</span> denom) <span class="keyword">throw</span> (<span class="keyword">const</span> <span class="keyword">char</span>*)&#123;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="string">"constructor called."</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">	rat_ = <span class="keyword">new</span> PImpl;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(denom == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="comment">// nothing below throw will be executed</span></span><br><span class="line">	    <span class="keyword">throw</span> Rational::DivideByZeroException(num);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	rat_ -&gt; numerator_ = num;</span><br><span class="line">	rat_ -&gt; denominator_ = denom;</span><br><span class="line">	</span><br><span class="line">	_reduce();	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Running result</strong>: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">constructor called. </span><br><span class="line">First Fraction (a&#x2F;b): 1&#x2F;0</span><br><span class="line">0: Denominator can&#39;t be zero!</span><br><span class="line">constructor called.</span><br><span class="line">Seconde Fraction (a&#x2F;b): 2&#x2F;0</span><br><span class="line">0: Denominator can&#39;t be zero!</span><br><span class="line">constructor called.</span><br><span class="line">a &#x3D; 0&#x2F;1</span><br><span class="line">b &#x3D; 0&#x2F;1</span><br><span class="line">a + b &#x3D; 0&#x2F;1</span><br></pre></td></tr></table></figure>
+
+<h2 id="Standard-Exception-example-in-C"><a href="#Standard-Exception-example-in-C" class="headerlink" title="Standard Exception example in C++"></a>Standard Exception example in C++</h2><blockquote>
+<p>Resource Acquisition is Initialization (RAII). Equates resource management with the lifetime of an object</p>
+</blockquote>
+<p><img src="/img/my42.jpg" alt="Let file can be opened along with program life time and don&#39;t forget the release the resource (`decontructor`)"></p>
+<blockquote>
+<p>Reference material:<br>Book: Thinking in C++, Volume 1, 2nd Edition,  Bruce Eckel.<br>Lectures: University of Waterloo, CS 247 (Software Abstraction and Specificati), 2020 spring term, professor Scott Chen.</p>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Run Zeng</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Be my own hero. Never never never give up...</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/c-OOP/"># c++, OOP</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2020/05/29/comNet4/">Web and E-mail principle</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Run Zeng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
