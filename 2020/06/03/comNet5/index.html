@@ -209,7 +209,8 @@
 </ol>
 <h2 id="How-DNS-work-in-network"><a href="#How-DNS-work-in-network" class="headerlink" title="How DNS work in network"></a>How DNS work in network</h2><p>DNS is commonly employeed by other application protocol such as HTTP and SMTP. For example, user surfs online.<br><img src="/img/my43.jpg" alt="DNS work process"></p>
 <h2 id="How-DNS-scale"><a href="#How-DNS-scale" class="headerlink" title="How DNS scale"></a>How DNS scale</h2><p><img src="/img/my44.jpg" alt="DNS is a distirbuted, hierarchical Database instead of centralization."></p>
-<p>For example: we are looking for <code>www.amazon.com</code>, go to root DNS, which returns IP of the responsible TCD server for top-level domain( TLD ) <code>com</code>. The TCD server finds the IP of the responsible authoritative server for <code>amazon.com</code>. Eventually, the authoritative server returns the IP for the host name <code>www.amazon.com</code>.</p>
+<p>For example: we are looking for <code>www.amazon.com</code>, go to root DNS, which returns IP of the responsible TLD server for top-level domain( TLD ) <code>com</code>. The TLD server finds the IP of the responsible authoritative server for <code>amazon.com</code>. Eventually, the authoritative server returns the IP for the host name <code>www.amazon.com</code>.</p>
+<p>root server -&gt; TLD( top-level domain server) -&gt; authoritative server -&gt; ISP.</p>
 <h2 id="Local-DNS"><a href="#Local-DNS" class="headerlink" title="Local DNS"></a>Local DNS</h2><blockquote>
 <p>It acts as a proxy, is very closed to and the central of the residential or institutional ISP.</p>
 </blockquote>
@@ -223,6 +224,19 @@
 <p><strong>DNS caching</strong>: each layer of DNS caches what it mapped. This cache is generally kept two days, depends on its level. Top level freshes less, bottom level freshes more.</p>
 <h2 id="DNS-Records"><a href="#DNS-Records" class="headerlink" title="DNS Records"></a>DNS Records</h2><p>A resource record is a four-tuple that contains the following fields: <code>(Name, Value, Type, TTL)</code>. The meaning of <code>Name</code> and <code>Value</code> depend on <code>Type</code>. <code>TTL</code> indicates the cache time. Think records as the record in database.</p>
 <h2 id="DNS-Messages"><a href="#DNS-Messages" class="headerlink" title="DNS Messages"></a>DNS Messages</h2><p><img src="/img/my46.jpg" alt="The format of messages between DNS servers"></p>
+<p>The Microsoft SQL Server virus, Slammer, had a side effect of effectively disabling 5 of the root name servers in the Internet.  How could this have affected the functioning and performance of the Internet?</p>
+<p>Answer: </p>
+<ul>
+<li><p>In theory, there should have been little impact to performance because:</p>
+<ul>
+<li>the LDNS caches entries to root and tld name servers, there are rare cases, that LDNS will have to query root, typically tld name servers would be sufficient.</li>
+<li>there is a redundancy in root servers. we have 13 root servers that are geographically dispersed, if a root server was compromised, the requests will be redirected to another root server.</li>
+<li>the LDNS also caches web server IP addresses.</li>
+</ul>
+</li>
+<li><p>In practice, it dramatically slowed the Internet due to a compound effect of routers (not just DNS servers) becoming overwhelmed. You can read more about it on wikipedia  </p>
+</li>
+</ul>
 <blockquote>
 <p>Reference material:<br>Book: Computer Networking A Top-Down Approach 7th edition, Jim Kurose &amp; Keith Ross, Addison-Wesley.<br>Slides: University of Waterloo, ECE 456/656 (Computer Networks), 2020 spring term, Professor Zille Huma Kamal.</p>
 </blockquote>
