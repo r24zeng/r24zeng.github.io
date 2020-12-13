@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Run Zeng">
+
+
+    <meta name="subtitle" content="Welcome to my blog">
+
+
+
+
+<title>UDP vs TCP | Run Zeng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Run Zeng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Run Zeng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">UDP vs TCP</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Run Zeng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 11, 2020&nbsp;&nbsp;19:25:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/notes/">notes</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <blockquote>
+<p>UDP and TCP are transport protocol. Their messages are called <strong>segment</strong>. <em>Messages between networks are called datagram.</em></p>
+</blockquote>
+<p>Network protocol/process is unreliable, so transport protocol must check error.</p>
+<p>On sender side (<em>multiplexing</em>): data is encapsulated on application layer, transport layer adds header (port number) to the package, then goes to network layer to add IP address.</p>
+<p>On receiver side (<em>demultiplexing</em>): network protocol figures out which IP address (server) to send, transport layer figures out which socket (port number) to send. Finally, message is sent to receiver’s application layer.</p>
+<p><strong>IP address (network layer)</strong> figures out host-to-host interface. <strong>port number (transport layer)</strong> figures out process-to-process interface. </p>
+<p>Application protocol + transport protocol examples:</p>
+<ul>
+<li>HTTP + TCP</li>
+<li>SMTP + TCP</li>
+<li>DNS + UDP</li>
+</ul>
+<p><img src="/img/my50.jpg" alt="my50"></p>
+<h2 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h2><ol>
+<li>connectionless: no introduction and handshake, open the door to push data through.</li>
+<li>non stateful.</li>
+<li>unreliable: no guaranty on data integrity and so on.</li>
+<li>uncontrolled: even if receiver’s transmission rate is smaller than sender’s package, it is still sent.</li>
+<li>two-tuple segment: source port number and destination port number.</li>
+</ol>
+<h3 id="Segment-structure"><a href="#Segment-structure" class="headerlink" title="Segment structure"></a>Segment structure</h3><p><img src="/img/my51.jpg" alt="my51"></p>
+<p>Details:</p>
+<ul>
+<li>data field: application data</li>
+<li>header field: four components, each one occupied 2 bytes.<ul>
+<li>source port</li>
+<li>destination port, in bytes</li>
+<li>length of the segment, including the header</li>
+<li>checksum, detect whether bits within the UDP segment have been altered</li>
+</ul>
+</li>
+</ul>
+<p><strong>If two segments have same destination port number but different IP addresses or source port numbers, will be directed to the same socket.</strong></p>
+<h2 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h2><ol>
+<li>connection-oriented: handshake before data passing</li>
+<li>statefull: connection is active, initialized or idle.</li>
+<li>reliable: integrity (correct), efficiently, completely, availability.</li>
+<li>regulated: transmission rates are limitted and adjusted within receiver’s.</li>
+<li>four-tuple: source IP address and port number, destination IP address and port number.</li>
+</ol>
+<p>TCP server contains <em>welcome socket</em> and <em>communication socket</em>. eg, welcom socket’s port number is #80 for HTTP, and #53 for SMTP. After initilizing welcome socket, the communication is redirected to communication socket. Port number on client doesn’t change, but port number of server changes. In logical communication, server’s port is still 80, but in practical the socket has back door which we don’t know. Simplify, client <code>A</code> and <code>B</code> have same destination IP address <code>C</code> and port number <code>80</code>, but their source IP addresses are different, then they will go to different sockets in reality on client <code>C</code>. If client <code>A</code> has two processes which have same source IP address and destination IP address <code>C</code> and port number <code>80</code>, but different port numbers, they definitely go to different sockets on <code>C</code>. This is why TCP doesn’t only use port number to identify server socket, but also IP address.</p>
+<p><strong>If two segments have same destination port number but different source IP addresses or source port numbers, will be directed to two different sockets.</strong></p>
+<h3 id="RDT-1-0"><a href="#RDT-1-0" class="headerlink" title="RDT 1.0"></a>RDT 1.0</h3><blockquote>
+<p>receiver sides of reliable data transfer protocol</p>
+</blockquote>
+<p>When implement RDT 1.0, we assume no loss data and no error data. RDT 1.0 is event triggered, which means only application packages data then triggers transport working and so on, trigger from above on sender side, and trigger from below on receiver side.</p>
+<h3 id="RDT-2-0"><a href="#RDT-2-0" class="headerlink" title="RDT 2.0"></a>RDT 2.0</h3><blockquote>
+<p>Adding checksum (error detection) based on RDT 1.0.</p>
+</blockquote>
+<p>Two techniques used:</p>
+<ul>
+<li>ACK: positive acknowledgement, send ACK if all thing is good</li>
+<li>NAK: negative acknowledgement, if error detected, send NAK, otherwise ignore</li>
+<li>ACK and NAK are based on comparing checksum</li>
+</ul>
+<p>If not too many errors, each response sends ACK if package received successfully, it is too much overhead. Because we want reliability.</p>
+<p>In NAK, only error happens then send NAK, it reduces overhead.</p>
+<p>In RDT 2.0, both of ACK and NAK are used. When good, send ACK back, when error, send NAK. So this is super safe about reliability gurranty. If getting NAK, sender sends current package again until getting ACK. In RDT 1.0, sender sends package if application layer triggers data sending continuously.</p>
+<p><strong>What’s elese can go wrong?</strong>: </p>
+<ul>
+<li>ACK and NAK can also be errorous. If sender sends data again, then the data is duplicated.</li>
+<li>lossy network results in package dropped, if the sender doesn’t recieve response, it will wait all the time.</li>
+</ul>
+<h3 id="RDT-2-1"><a href="#RDT-2-1" class="headerlink" title="RDT 2.1"></a>RDT 2.1</h3><blockquote>
+<p>Resolve data duplicated and ACK/NAK error problems from RDT 2.1.</p>
+</blockquote>
+<p>Solution:</p>
+<ul>
+<li>Append checksum to ACK/NAK.</li>
+<li>Append binary sequence numbers (0 or 1) to data package. <code>0</code> represents old data, <code>1</code> represents new data. This solves ACK loss. <ul>
+<li>To be detail, if receiver has received package 0, but ACK is lost during sending to sender. The sender sends the package 0 again, the receiver expects package 1, so it knows package 0 has been accepted. In order to avoid data duplication, it sends back ACK to sender immidiately.</li>
+</ul>
+</li>
+</ul>
+<h3 id="RDT-2-2"><a href="#RDT-2-2" class="headerlink" title="RDT 2.2"></a>RDT 2.2</h3><blockquote>
+<p>NAK-free protocol, guarantee don’t have corrupted package and out of order ACK. 与RDT 2.1的区别就是，RDT 2.1只在package上加了序列数字0或者1，但是RDT 2.2 在ACK上也加了序列数字0或者1，这样就不需要NAK了。</p>
+</blockquote>
+<p>Sender must clarify data switch between <code>0</code> and <code>1</code>, reciver must clarify ACK state switch between <code>0</code> and <code>1</code>. The data package and ACK must be at the same state. Otherwise the data  recieved is duplicated, it doesn’t go to application agagin. 发送者发现接收的数据不对，立马再发送，接受者立马返回ACK+序号。</p>
+<h3 id="RDT-3-0"><a href="#RDT-3-0" class="headerlink" title="RDT 3.0"></a>RDT 3.0</h3><blockquote>
+<p>Can detect package loss (package or ACK/NAK), and recover (retransmission), which is not guarranteed enough in RDT 2.2. Timeout mechanism replaces RDT 2.2. 相当于结合两者，RDT 3.0 在发送者端（timeout），RDT 2.2 在接收者端（package sequence number）。</p>
+</blockquote>
+<p>Guess how long it’ll take for RTT. Timeout means package drops, then retransmit. 发送者发现接收的数据不对，不立马处理，完全不管 ACK0/1, 反正等超时再重新发送。接收者检测重复的数据但不hold timer，是重复的数据直接忽略，发送ACK+序号。发送者只需要检测timeout，接收者只需要检测重复。</p>
+<p>只有package 0 发送并且收到 ACK 0，才能发送package 1. 这叫round trip transmission (RTT)，只适用于小的package.</p>
+<h3 id="Some-transport-protocols-efficiency-comparison"><a href="#Some-transport-protocols-efficiency-comparison" class="headerlink" title="Some transport protocols efficiency comparison"></a>Some transport protocols efficiency comparison</h3><ol>
+<li><p><strong>RDT 3.0 stop-and-wait operation</strong>: In one round trip, compute transimission efficiency: <code>(L/R)/(RTT+L/R)</code>, 因为每次只能传递一个消息，没收到前面一个ACK就不会传递下一个package。</p>
+</li>
+<li><p><strong>Pipline protocol</strong>: <code>N</code> packages are allowed to pass simultaneously, then transimission efficiency: <code>(N*L/R)/(RTT+L/R)</code>.</p>
+</li>
+<li><p><strong>GBN (Go-Back-N)</strong>: 如果同时传输4条数据<code>[0,1,2,3</code>，如果数据2 receiver没有收到，那么就会丢掉已经接收到的数据4，并且返回上一次的ACK（例如ACK1）给sender (sender 收到任何一个ACK都会发送下一个package，但这些都会被reciever丢弃)，这时候sender再一次从数据3开始发送4条。总的来说，sender和reciever都不允许skip package 和 ACK, 允许重复发送但是都会丢掉重复接收的消息。</p>
+</li>
+</ol>
+<p><img src="/img/my52.jpg" alt="my52"></p>
+<ol start="4">
+<li><strong>SR (selective repeat)</strong>: 如果同时传输4条数据<code>[0,1,2,3]</code>, receiver有buffer机制。如果数据2 reciever没收到，那么后面接收到的数据都存在自己的buffer里而不继续传递给application layer，并且正常返回 ACK 给sender，sender 继续正常工作，直到发现前面的ACK2 timeout了，然后sender 再次发送数据2，直到receiver 接收到了数据2才将后续的数据继续传递给application layer.</li>
+</ol>
+<p><img src="/img/my53.jpg" alt="my53"></p>
+<h2 id="Capture-UDP-and-TCP-traffic"><a href="#Capture-UDP-and-TCP-traffic" class="headerlink" title="Capture UDP and TCP traffic"></a>Capture UDP and TCP traffic</h2><p>On end-system 1 linux: <code>sudo tcpdump -nnvvv host 8.8.8.8 and port 53</code> (define server port number is <code>53</code>, so application protocol is SMTP and DNS, client’s port is going to assigned by OS automatically)</p>
+<p>On end-system 2 linux: <code>nslookup</code></p>
+<hr>
+<p>On end-system 1 linux: <code>sudo tcpdump -nnvvv port 80</code> (define server port number is <code>80</code>, so application protocol is HTTP and DNS, client’s port is going to assigned by OS automatically)</p>
+<p>On end-system 2 linux: <code>telnet www.google.com 80</code></p>
+<blockquote>
+<p>Reference material:<br>Book: Computer Networking A Top-Down Approach 7th edition, Jim Kurose &amp; Keith Ross, Addison-Wesley.<br>Slides: University of Waterloo, ECE 456/656 (Computer Networks), 2020 spring term, Professor Zille Huma Kamal.</p>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Run Zeng</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Be my own hero. Never never never give up...</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/computer-network/"># computer network</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/06/19/comNet9/">Reliable Data Transfer(RDT) - TCP</a>
+            
+            
+            <a class="next" rel="next" href="/2020/06/03/comNet7/">Socket Programming</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Run Zeng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
