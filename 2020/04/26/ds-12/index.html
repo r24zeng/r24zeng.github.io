@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Run Zeng">
+
+
+    <meta name="subtitle" content="Welcome to my blog">
+
+
+
+
+<title>Distributed system - Class 12(Coordination and physical clock) | Run Zeng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Run Zeng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Run Zeng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Distributed system - Class 12(Coordination and physical clock)</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Run Zeng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 26, 2020&nbsp;&nbsp;17:15:11</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/notes/">notes</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p> <code>make</code> depends on time.<br>In order to synchronize UTC time, precision and accuracy are very import but the cost is expensive.</p>
+<p>How much synchronize and how frequecncy check you should make decision.</p>
+<p>Every machine has its own quatrz crystal, so we need <strong>NTP</strong> ()</p>
+<p>You can get UTC time by three popular approches, through RPC call ask UTC server, through radio box, through satellite of standard US.</p>
+<h3 id="Keeping-time-with-UTC-server"><a href="#Keeping-time-with-UTC-server" class="headerlink" title="Keeping time with UTC server"></a>Keeping time with UTC server</h3><p>Client A records sending UTC request time to UTC server B about <code>T_1</code>, server B sends the recieve request time <code>T_2</code>; Sever B sends response time <code>T_3</code>, client A records recieve response time <code>T_4</code>. Then we know the time difference (<code>T_2-T_1</code>) and (<code>T_4-T_3</code>). Client computes the avarage delay time, then it adjusts its time caching up with UTC time.</p>
+<p>If not initialize request to send to server, you’ll not get response.</p>
+<p>Number of massages only to some client.</p>
+<h3 id="Broadcast-algorithm-without-UTC"><a href="#Broadcast-algorithm-without-UTC" class="headerlink" title="Broadcast algorithm without UTC"></a>Broadcast algorithm without UTC</h3><p>Using a time server to ask everyone the time on each machine, and compute the avarage time, send the time to everyone, to force every machine at the same time.</p>
+<p>Never move your clock to backward, avoid sudden change otherwise may miss events, must adjust time smoothly.</p>
+<p>Time server force all machines to send response and force every one have the same time as itself, and doesn’t care about true notion of time.</p>
+<p>Number of massages, send to everyone and get reply from everyone. Load of massages is heavy.</p>
+<h3 id="Happened-before-relationship-without-synchronization-lampor-clock"><a href="#Happened-before-relationship-without-synchronization-lampor-clock" class="headerlink" title="Happened-before relationship without synchronization (lampor clock)"></a>Happened-before relationship without synchronization (lampor clock)</h3><p>No need to synchronize time, we only need to agree event ordering without physical clock.</p>
+<p>Partial event ordering, not care about all evens, only care about what we care, this is less expensive.</p>
+<p><strong>Transitivity derive</strong>: In centralize world, it is easy to know the event ordering. But in distributed system (many machines), we don’t know which one happen first. If machine A send <code>b</code> to machine <code>c</code>, then we know <code>b</code> happends before <code>c</code>. </p>
+<p><strong>2 rules</strong>:</p>
+<ul>
+<li>LC1: Li is incremented before each event is issued at process Pi: Li=Li+1</li>
+<li>LC2:</li>
+<li><ul>
+<li>(a) when a process Pi sends a msg m, it piggybacks on m the value t=Li</li>
+</ul>
+</li>
+<li><ul>
+<li>(b) on receiving (m, t), Pj computes max(Li, t) and then applies LC1 before timestamping the event.</li>
+</ul>
+</li>
+</ul>
+<p><strong>Process</strong></p>
+<ul>
+<li>Give every machine initial value, <code>P1 (0), P2(0)</code></li>
+<li>Give massage increase <code>1</code></li>
+<li>Send it to the other machine <code>P2</code>, compare current time and massage time recieved, <code>max(0, 2)=2</code>, then increase the msg <code>2+1=3</code></li>
+<li>Another msg happends after that on <code>P2</code>, then increase <code>1</code> to <code>4</code></li>
+<li><code>P3</code> recieve the msg, <code>max(0,4)=4</code>, the current timestamp for the recieved msg is <code>5</code><h3 id="Vector-clock"><a href="#Vector-clock" class="headerlink" title="Vector clock"></a>Vector clock</h3>multipel dimensions of clock, extention of lampor clock, order events across multipel processes。</li>
+</ul>
+<p>On P1 (0,1,0), on P2 (1,1,0), compare them, if any dimension is bigger than anyone, other digits are equal, then indicades the timestamp is higher than the other one.</p>
+<blockquote>
+<p>Reference material:<br>Book: Distributed Systems, Third edition, Version 3.02(2018), Maarten van Steen and Andrew S. Tanenbaum.<br>Lectures: University of Waterloo, CS 454/654 (Distributed System), 2020 winter term, Professor Khuzaima Daudjee.</p>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Run Zeng</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Be my own hero. Never never never give up...</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/distributed-system/"># distributed system</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/04/26/ds-17/">Distributed system - Class 17(Replication)</a>
+            
+            
+            <a class="next" rel="next" href="/2020/04/26/ds-11/">Distributed system - Class 11(Distribution file system tutorial)</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Run Zeng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

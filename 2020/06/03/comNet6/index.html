@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Run Zeng">
+
+
+    <meta name="subtitle" content="Welcome to my blog">
+
+
+
+
+<title>Peer-to-Peer File System | Run Zeng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Run Zeng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Run Zeng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Peer-to-Peer File System</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Run Zeng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 3, 2020&nbsp;&nbsp;23:15:30</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/notes/">notes</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><p>Web browser, mail reader, DNS are employeed server-client architectures. Imaging file system is a server-client distributed system, then one server has heavy load and traffic jam. If file system is a P2P distributed system, then one large file is distributed as some parts on many peers. The most popular P2P file distribution protocol is BitTorrent.</p>
+<h2 id="Scalibility-of-P2P-architectures"><a href="#Scalibility-of-P2P-architectures" class="headerlink" title="Scalibility of P2P architectures"></a>Scalibility of P2P architectures</h2><p><img src="/img/my47.jpg" alt="P2P distributed system model."></p>
+<ul>
+<li><strong>u<sub>s</strong> – upload rate of server</li>
+<li><strong>u<sub>i</strong> – upload rate of ith peer</li>
+<li><strong>d<sub>min</strong> – minimum download rate of peers</li>
+<li><strong>F</strong> – distributed file size</li>
+<li><strong>N</strong> – number of peers</li>
+<li><strong>D<sub>cs</strong> – distributed time of client-server distributed architecture</li>
+<li><strong>D<sub>p2p</strong> – distributed time of P2P distributed architecture</li>
+<li><strong>Distributed time</strong>: the time it takes to assign a copy of file to all <em>N</em> peers.</li>
+</ul>
+<ol>
+<li>the time of server uploading to each peer one copy of the file: NF/u<sub>s</li>
+<li>the maximum time of download whole file from peers: F/d<sub>min</li>
+</ol>
+<p>Total time D<sub>cs</sub> = max{NF/u<sub>s</sub>, F/d<sub>min</sub>}.</p>
+<ol>
+<li>the server must upload each bit of the file at least once into its access link. The minimum time: F/u<sub>s</li>
+<li>the maximum time of download whole file from peers: F/d<sub>min</li>
+<li>the total upload capacity of the system as a whole is equal to the upload rate of the server plus the upload rates of each of the individual peers, that is, U<sub>total</sub>=u<suub>s</sub>+u<sub>1</sub>+ … + u<sub>N</sub>. The system must upload <em>F</em> bits to each of peers, then total bits is <em>NF</em>. The distribution time is <em>NF/u<sub>total</em></li>
+</ol>
+<p>Total time D<sub>P2P</sub> &gt;= max{u<sub>s</sub>, F/d<sub>min</sub>, NF/u<sub>total</sub>}.</p>
+<p><em>A peer can also distribute a file after receiving it from the server, this time consume is more complex.</em></p>
+<p><img src="/img/my48.jpg" alt="my48"></p>
+<h2 id="BitTorrent-Protocol"><a href="#BitTorrent-Protocol" class="headerlink" title="BitTorrent Protocol"></a>BitTorrent Protocol</h2><blockquote>
+<p>Torrent is a collection of peers. Each torrent has an infrastructure node called a tracker.</p>
+</blockquote>
+<p><img src="/img/my49.jpg" alt="We stand by Alice (one of the peers ) side to simulate BitTorrent Protocol">  </p>
+<p>Explaination: </p>
+<ol>
+<li>Alice join the torrent, then register itself with tracker. The tracker selects a list of subset of the peers and sends Alice their IP addresses.</li>
+<li>Alice build concurrent TCP with all its neighbours. Some peers leave and some join, then try new connections to Alice.</li>
+<li>Alice asks all her neighbours for their chunks of file. If Alice has <em>L</em> neighbours, she will obtain <em>L</em> lists of chuncks.</li>
+<li>Two questions Alice should consider: (1) which<br>chunks should she request first from her neighbors? (2) to which of her neighbors should she<br>send requested chunks?<ul>
+<li>(1) answer: <strong>rarest first</strong> technique.</li>
+<li>(2) answer: trading algorithm.</li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p>Reference material:<br>Book: Computer Networking A Top-Down Approach 7th edition, Jim Kurose &amp; Keith Ross, Addison-Wesley.<br>Slides: University of Waterloo, ECE 456/656 (Computer Networks), 2020 spring term, Professor Zille Huma Kamal.</p>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Run Zeng</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Be my own hero. Never never never give up...</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/computer-network/"># computer network</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/06/04/comNet7/">Socket Programming</a>
+            
+            
+            <a class="next" rel="next" href="/2020/06/03/comNet5/">DNS</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Run Zeng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

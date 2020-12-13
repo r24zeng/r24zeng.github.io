@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Run Zeng">
+
+
+    <meta name="subtitle" content="Welcome to my blog">
+
+
+
+
+<title>README.md | Run Zeng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Run Zeng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Run Zeng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">README.md</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Run Zeng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 28, 2020&nbsp;&nbsp;17:58:00</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/my-blog/">my blog</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="This-is-my-blog"><a href="#This-is-my-blog" class="headerlink" title="This is my blog"></a>This is my blog</h1><h3 id="My-personal-web-link-is-https-www-runruning-cn"><a href="#My-personal-web-link-is-https-www-runruning-cn" class="headerlink" title="My personal web link is: https://www.runruning.cn"></a>My personal web link is: <a href="https://www.runruning.cn" target="_blank" rel="noopener">https://www.runruning.cn</a></h3><h3 id="My-web-github-repository-is-https-github-com-r24zeng-myweb"><a href="#My-web-github-repository-is-https-github-com-r24zeng-myweb" class="headerlink" title="My web github repository is: https://github.com/r24zeng/myweb"></a>My web github repository is: <a href="https://github.com/r24zeng/myweb" target="_blank" rel="noopener">https://github.com/r24zeng/myweb</a></h3><h3 id="My-blog-link-is-https-r24zeng-github-io"><a href="#My-blog-link-is-https-r24zeng-github-io" class="headerlink" title="My blog link is: https://r24zeng.github.io"></a>My blog link is: <a href="https://r24zeng.github.io" target="_blank" rel="noopener">https://r24zeng.github.io</a></h3><h3 id="My-blog-github-repository-is-https-github-com-r24zeng-r24zeng-github-io"><a href="#My-blog-github-repository-is-https-github-com-r24zeng-r24zeng-github-io" class="headerlink" title="My blog github repository is: https://github.com/r24zeng/r24zeng.github.io"></a>My blog github repository is: <a href="https://github.com/r24zeng/r24zeng.github.io" target="_blank" rel="noopener">https://github.com/r24zeng/r24zeng.github.io</a></h3><h3 id="Some-information-about-this-blog"><a href="#Some-information-about-this-blog" class="headerlink" title="Some information about this blog:"></a>Some information about this blog:</h3><p>Tools: Mac terminal, gitpage, hexo, hexo themes, npm, node.js</p>
+<p>Theme: <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank" rel="noopener">Chic</a>, this is a very clean and excellent design. However, there is no comment, share, like functions. I hope I can develop it.</p>
+<p>This folder is located at mystudy/hexo folder in my local computer. Below are some useful <strong>hexo commands</strong>.</p>
+<p><img src="/img/my5.png" alt="my5"></p>
+<p>Add title, tags and categories at the  beginning of a post as below.</p>
+<p>--- <br><br>title: README.md <br><br>tags: readme <br><br>categories: my blog <br><br>---</p>
+<p>Problem: </p>
+<ul>
+<li>cache on client makes fresh deploy hard, after I typed <code>hexo d -g</code> in terminal, my blog didn’t refresh except clearing web history. </li>
+<li>When I run the above command, my whole github repository is fresh, and README.md witten in this repository has also gone. It’s not so firendly. Which means, I can’t edit on github directly, such as writting new page. It’s a problem I should solve in the future.</li>
+</ul>
+<p><code>Hexo + Gitpage</code> teaching resource can be found everywhere online. </p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Run Zeng</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Be my own hero. Never never never give up...</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/readme/"># readme</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/05/02/What-should-we-consider-when-design-distributed-system/">What should we consider when design distributed system</a>
+            
+            
+            <a class="next" rel="next" href="/2020/04/26/ds-01/">Distributed system - Class 1</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Run Zeng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

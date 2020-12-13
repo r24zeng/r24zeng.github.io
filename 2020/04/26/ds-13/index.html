@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Run Zeng">
+
+
+    <meta name="subtitle" content="Welcome to my blog">
+
+
+
+
+<title>Distributed system - Class 13(Coordination) | Run Zeng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Run Zeng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Run Zeng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Distributed system - Class 13(Coordination)</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Run Zeng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 26, 2020&nbsp;&nbsp;17:15:11</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/notes/">notes</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Vector-clocks-according-to-lampor-timestamp"><a href="#Vector-clocks-according-to-lampor-timestamp" class="headerlink" title="Vector clocks (according to lampor timestamp)"></a>Vector clocks (according to lampor timestamp)</h2><p>Multiple demensions so that more machines can coordinate together. At least one dimension is higher and at least one dimension is equal, then you can infer the timestamp is before the other one.</p>
+<ul>
+<li>if A happends before B, it doesn’t mean A causes B.</li>
+</ul>
+<h2 id="Mutual-exclusion"><a href="#Mutual-exclusion" class="headerlink" title="Mutual exclusion"></a>Mutual exclusion</h2><h3 id="Successful-algorithm-of-system-must-ensure"><a href="#Successful-algorithm-of-system-must-ensure" class="headerlink" title="Successful algorithm of system must ensure:"></a>Successful algorithm of system must ensure:</h3><ul>
+<li>Correctness, your system doesn’t do multiple processes at one time.</li>
+<li>The order of serve.</li>
+<li>Liveness of processes, if a client holding the resource die, the server doesn’t get reply then it knows the client dies, so it can clean the data and give permission to others. If something is good, it must happen eventually if give enough time. Eg, if one person geting the entry permission is good thing, the person will get the permission eventually.</li>
+</ul>
+<p>There is perfermance bottleneck, distributed system wants to do concurrent to imporve the perfermance, but it’s not allowed to execute many processes at the same time. How to solve this? Two approches: </p>
+<ul>
+<li>Permission based</li>
+<li>Token based</li>
+</ul>
+<h3 id="Permission-based"><a href="#Permission-based" class="headerlink" title="Permission based"></a>Permission based</h3><ul>
+<li><p>sysmply use a coordinator: You ask coordinator for permission, coordinator say “ok” then you can access, otherwise put you in the waiting queue and not reply you, when last person finish then tell coordinator he is done, coordinator replies to you “ok”, then you can access.</p>
+</li>
+<li><p>according to timestamp, decide the order. Both of A and B send requests and also their timestamps, the timestamp lower will has permission first. When one leaves, send “ok” to the other person, then the person enter. How to solve one person’s failure? One person dies, he can’t send “ok” back to the other person. To centralize system, it works, but to distributed system, it doesn’t work.</p>
+</li>
+</ul>
+<h3 id="Token-based"><a href="#Token-based" class="headerlink" title="Token based"></a>Token based</h3><ul>
+<li>when you can enter depends on your position in the ring, the token will pass to you when the last person in the ring is done. Eg, “5” sends token to “6”, let “7” knows “6” is holding the token, start to set time out. If “6” dies, “7” konws, then “5” sends token to “7” directly.</li>
+</ul>
+<h2 id="What-happends-if-coordinator-fails-–-Election-algorithm"><a href="#What-happends-if-coordinator-fails-–-Election-algorithm" class="headerlink" title="What happends if coordinator fails?  – Election algorithm"></a>What happends if coordinator fails?  – Election algorithm</h2><p>Having different coordinators to do the same thing is not a good idea, because they may reply differently, then who you should believe.</p>
+<ul>
+<li>higher ID can be new coordinator (bully algorithm)</li>
+</ul>
+<p>4 sends reuqest to 7 to get permission, but 7 fails, 4 say it seems 7 fail, then it asks who want to be new coordinator between 5, 6, 7. Alive IDs “5” and “6” response “ok”. “5” and “6” start to held an election, “5” sends to “6” and “7”, only “6” response “ok, I can be a new coordinator”. At the same time, “6” sends request to “7”, “7” doesn’t response. At last, “6” wins, it tells everyone “I am the new coordinator”.</p>
+<ul>
+<li>election algorithm using a ring</li>
+</ul>
+<p>0 - 1 - 2 - 3 - 4 - 5 - 6 - 7 - 0. Start from “3”, “3” sets time out and know a coordinator die, and puts its own ID on message [3], “4” also puts its own ID on message [3,4], … until “6” passes [3,4,5,6] to “7”, “7” doesn’t response, the message goes to “0”, “0” only recieve [3,4,5,6], then it knows “7” fails, … the message goes to “3”, “3” knows “7” fails as well and pick highest ID as new coordinator. “3” starts to pass message to let everyone know “6” is the new coordinator.</p>
+<blockquote>
+<p>Reference material:<br>Book: Distributed Systems, Third edition, Version 3.02(2018), Maarten van Steen and Andrew S. Tanenbaum.<br>Lectures: University of Waterloo, CS 454/654 (Distributed System), 2020 winter term, Professor Khuzaima Daudjee.</p>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Run Zeng</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Be my own hero. Never never never give up...</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/distributed-system/"># distributed system</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/04/26/ds-14/">Distributed system - Class 14(transaction)</a>
+            
+            
+            <a class="next" rel="next" href="/2020/04/26/ds-08/">Distributed system - Class 8(Distributed Naming)</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Run Zeng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Run Zeng">
+
+
+    <meta name="subtitle" content="Welcome to my blog">
+
+
+
+
+<title>Distributed system - Class 8(Distributed Naming) | Run Zeng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Run Zeng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Run Zeng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Distributed system - Class 8(Distributed Naming)</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Run Zeng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 26, 2020&nbsp;&nbsp;17:15:11</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/notes/">notes</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <blockquote>
+<p>Inorder to find URL quickly. DNS is an example.</p>
+</blockquote>
+<p>In order to reach a server, we need to konw the name and address of the machine. If you send the email, the email address and name should be looked up.</p>
+<h3 id="Name"><a href="#Name" class="headerlink" title="Name"></a>Name</h3><ul>
+<li>Pure name: 0 or 1</li>
+<li>Non-purename</li>
+<li>name gives us some attributes.</li>
+</ul>
+<h3 id="Two-types-of-name-services"><a href="#Two-types-of-name-services" class="headerlink" title="Two types of name services"></a>Two types of name services</h3><ul>
+<li>Name services: most common look is (name + locaiton)</li>
+<li>Directory services: property and value, can you give me a name?</li>
+</ul>
+<h3 id="Resolve-URL"><a href="#Resolve-URL" class="headerlink" title="Resolve URL"></a>Resolve URL</h3><p>name sends different address space.</p>
+<p>Process: find Network(IP) -&gt; macchine -&gt; port -&gt; direcotry -&gt; file -&gt; html. But machiine can’t resolve the <strong>html</strong>, it can only recognize 0 or 1, then it should map <strong>html</strong> to 0 or 1.</p>
+<h3 id="Requirements-on-Name-Services"><a href="#Requirements-on-Name-Services" class="headerlink" title="Requirements on Name Services"></a>Requirements on Name Services</h3><p>Over 50 million divices until 2020, how to figure out all the name schemes? Name services are the heart of distributed applications. Fault isolation means if one name service shut down, it shoudl look up other name service and dosen’t affect others.</p>
+<h3 id="Name-sapces"><a href="#Name-sapces" class="headerlink" title="Name sapces"></a>Name sapces</h3><p>Name of files system, it give you navigation, around ‘/‘ provides important contexts and expands name space easily. Therefore name space supports organization and lookup.</p>
+<h3 id="Naming-graph-with-single-root"><a href="#Naming-graph-with-single-root" class="headerlink" title="Naming graph with single root"></a>Naming graph with single root</h3><p>Name on leaf node must be file. If you have name graph, it can extend to be a tree. Golab comes after right of the root by global organization, very stable. Administrational layer is also vary stable, there may be distribution such as “waterloo”, sometimes changes. Managerial layer is user managing the node by themselves. Rename a file will change the name. Increasing nodes from top to bottom.</p>
+<h3 id="Name-space-distributions-2"><a href="#Name-space-distributions-2" class="headerlink" title="Name space distributions(2)"></a>Name space distributions(2)</h3><p>Email ends up with look up, it reaches the very top layer of nodes, keep ask node layer by layer where the address the machine is. For example, you send email from our university to Japanese univerisity, your email service ask global domain Japan frist, then ask university, then the machine, the port and unitl to person. Global layer must be very reliable. your file replication for back up on your lap is very little. Cacheing means I may send same email to same locations, public your update and cache value so that if one domain is changed, you want to lookup other domains again. Because changes on global and adminstraional layers don’t happen frequently, you don’t need to update them. Domain name also needs to cache because so many users send emails to same address.</p>
+<p>Partitioning helps recognize the address. Replication and caching need authorility. Every machine has DNS clinet, your DNS client will do caching yourself. So caching happens in every level. Most client DNS tries to do cycle,because if it doesn’t find the server, it goes other server again and again until find the server or goese back to client. </p>
+<h3 id="Navigation"><a href="#Navigation" class="headerlink" title="Navigation"></a>Navigation</h3><p><strong>Iterative</strong>: Client sends request to node 1, it may response “yes, it has done” or “I havn’t found it”. Then it asks other nodes. Client decides when it stops. Every node responses to client directly and client dicides next step. </p>
+<p><strong>Recurtive</strong>: NS1 is No-recurisive server-controlled means nodes behave as client to resolve name instead of client side recurisive. Server sens one request to NS1, NS1 can’t figure out and just sends request to NS2, When NS1 asks NS2, NS2 responds it can do it then send remain parts to next node. There are a couple of issues. If there are a lot of requests, request from client must be responsed and response can’ be forgot, so all layers’ nodes hold the requests all the time until done. Iteritive and recursive, which one is faster? This is recursive. Every hoop is physically very closed to each other so this way is faster. Caching in every layer exists, so it saves time for caching and imporve communication efficiency.</p>
+<p>A DNS client is called a resolver:</p>
+<ul>
+<li>normally implemented as library S/W </li>
+<li>communicates with one or more name servers</li>
+<li>simple req-reply protocal using UDP(because you only lookup, if fail just send the request again. Because you don’t want waste resource asuch as adding connections)</li>
+<li>client implements timeout and resends query if necessary(Because you use UDP, your request may get lost, but just send it gain.)</li>
+<li>can configure resolver to contact an initial list of name servers, eg, in some other of preference</li>
+<li>the DNS arch allows for recursive and iterative navigation(Once server does recursive, you can’t force server to do things in your way. In order to decrease latency, you can send a few request to get multiple IP)</li>
+<li>the resolver can specify which ype of nvigation is required when contacting a name server<ul>
+<li>but name server is not bound to follow this</li>
+<li>can have issues with typing up server threads, causing delays in requests</li>
+<li>can pack multiple queries in a single msg cand can get multiple replies in a “ “</li>
+</ul>
+</li>
+</ul>
+<h3 id="Domain-Name-System-DNS"><a href="#Domain-Name-System-DNS" class="headerlink" title="Domain Name System(DNS)"></a>Domain Name System(DNS)</h3><blockquote>
+<p>name-to-IP mapping</p>
+</blockquote>
+<p>Resource sits in servers throughout whole world, distribution is naturally required. If you try to do centralize DNS, don’t need scale because you only care about the domain you want to contact, others are far away from you.</p>
+<blockquote>
+<p>Reference material:<br>Book: Distributed Systems, Third edition, Version 3.02(2018), Maarten van Steen and Andrew S. Tanenbaum.<br>Lectures: University of Waterloo, CS 454/654 (Distributed System), 2020 winter term, Professor Khuzaima Daudjee.</p>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Run Zeng</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Be my own hero. Never never never give up...</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/distributed-system/"># distributed system</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/04/26/ds-13/">Distributed system - Class 13(Coordination)</a>
+            
+            
+            <a class="next" rel="next" href="/2020/04/26/ds-09/">Distributed system - Class 9(Domain Name System(DNS))</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Run Zeng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Run Zeng">
+
+
+    <meta name="subtitle" content="Welcome to my blog">
+
+
+
+
+<title>Distributed system - Class 16(Replication) | Run Zeng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Run Zeng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Run Zeng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Distributed system - Class 16(Replication)</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Run Zeng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 26, 2020&nbsp;&nbsp;17:15:11</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/notes/">notes</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <blockquote>
+<p>fundamental issue of replication: improve good performance</p>
+</blockquote>
+<p>Four reason how replication improve good performance:</p>
+<ul>
+<li>decrease latency, bring data closer to client</li>
+<li>for avaliablity, once server fails, client can still continue doing its job</li>
+<li>for avaliablity, if one server dies, you should back up data to another server, “back up” is replication</li>
+<li>For consistence (improving trust), on server, client A read value back, you trust. But if another client B change it, do you trust it? If you read two copy have the same value, you can trust it. Replication improves the trust.</li>
+</ul>
+<p><strong>When you design a distributed system</strong>, (1) you should think about the replication, how to map the logical copy to physical copies. (2) what is your replication requirements? eg, if client writes a file, you update all copies or only one copy. Transparency: you do the operation, don’t need to know how replication applied. (3) Then what algorithm you will use to satisfy requirements.</p>
+<h2 id="Some-levels-of-consistency"><a href="#Some-levels-of-consistency" class="headerlink" title="Some levels of consistency"></a>Some levels of consistency</h2><h3 id="strict-consistency"><a href="#strict-consistency" class="headerlink" title="strict consistency"></a>strict consistency</h3><blockquote>
+<p>everthing happens in real time, read file A - machine 2, write file A - machine 1, close ifle A. <br><br>result: mechine 1 should see file A changes.</p>
+</blockquote>
+<h2 id="Linearizability"><a href="#Linearizability" class="headerlink" title="Linearizability"></a>Linearizability</h2><blockquote>
+<p>sign timestamp to each operation. Server holds the order of all timestamps. Keeping global timestamp is chanllenge and expensive.</p>
+</blockquote>
+<h3 id="Sequential-consistency"><a href="#Sequential-consistency" class="headerlink" title="Sequential consistency"></a>Sequential consistency</h3><blockquote>
+<p>Compared to strict conssitency, sequential consistency doesn’t have global timestamps, which order should be applied?</p>
+</blockquote>
+<p>Image you buy seeds online, read means you see 2 seeds avaliable online, write means you purchase online.</p>
+<p>For example: <br><br>mechine 1 do write, mechine 2 do read on the same file. Which global order should be? <br><br>If read before write, machine 2 can only read old data. In verse, read new data.</p>
+<p>For example: <br><br>Mechine 1 will do r1[x] and w1[x], machine 2 will do r2[x] and w2[x]. <br></p>
+<ul>
+<li><code>w1[x] r1[x] w2[x] r2[x]</code>. Wrong, don’t inverse order for one meachine.</li>
+<li><code>r1[x] w1[x] r2[x] w2[x]</code>. Correct, for each machine, the order is keeped.</li>
+<li><code>r2[x] w2[x] r1[x] w1[x]</code>. Correct, it doesn’t matter who does write first, because when client wants to purchase, others may have purchased. Client doesn’t know the order behinds, he thinks it may happen because my order is late than others.</li>
+<li><code>r1[x] r2[x] w1[x] w2[x]</code>. Correct.</li>
+<li><code>r2[x] r1[x] w2[x] w1[x]</code>. / <code>r2[x] r1[x] w1[x] w2[x]</code>. Correct.</li>
+</ul>
+<p><strong>Main idea: Obey the order on each meachine, order of individual process depends on this program.</strong></p>
+<h2 id="transactional-replication-consistency"><a href="#transactional-replication-consistency" class="headerlink" title="transactional replication consistency"></a>transactional replication consistency</h2><blockquote>
+<p><code>copy</code> stands for physical machine which stores copy. </p>
+</blockquote>
+<ul>
+<li>eager/synchronous replication: if you do transaction on one copy, all conpies will be updated imediately. (1) expensive commit. One transaction, update all copies, then commit transactions on all copies. (2) when transaction is long-lined. One transaction takes long time during one copy, after while, when apply to another copy, the copy isn’t avalibale at this time, then replication skip it. The replication fail. (3) update everything at once. If one copy is down, you can’t be synchronous. You can wait or abort and start transaction again.</li>
+<li>lazy/asynchronous replication: if transaction on one copy, it only updates one master copy. If one copy fails, transaction applies to another copy. If one large transaction, you break it into many small transactions on different copies. Long-lined transaction problem is solved. If one copy is not avalibale, you work on another cocpy. Weak: transaction 1 on copy A, transaction 2 can only apply on copy B, at the end, you want to merge two transactions on A and B. On A, T1 - T2. On B, T2 - T1. The merge order on two copies is different. Solution: one copy must be master copy. Then A and B know apply which transaction first.</li>
+</ul>
+<blockquote>
+<p>Reference material:<br>Book: Distributed Systems, Third edition, Version 3.02(2018), Maarten van Steen and Andrew S. Tanenbaum.<br>Lectures: University of Waterloo, CS 454/654 (Distributed System), 2020 winter term, Professor Khuzaima Daudjee.</p>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Run Zeng</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Be my own hero. Never never never give up...</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/distributed-system/"># distributed system</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/04/26/ds-01/">Distributed system - Class 1</a>
+            
+            
+            <a class="next" rel="next" href="/2020/04/26/ds-15/">Distributed system - Class 15</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Run Zeng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

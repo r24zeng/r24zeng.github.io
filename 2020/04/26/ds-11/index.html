@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Run Zeng">
+
+
+    <meta name="subtitle" content="Welcome to my blog">
+
+
+
+
+<title>Distributed system - Class 11(Distribution file system tutorial) | Run Zeng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Run Zeng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Run Zeng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Distributed system - Class 11(Distribution file system tutorial)</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Run Zeng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">April 26, 2020&nbsp;&nbsp;17:15:11</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/notes/">notes</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="semantics-of-file-sharing"><a href="#semantics-of-file-sharing" class="headerlink" title="semantics of file sharing"></a>semantics of file sharing</h2><h2 id="file-locking"><a href="#file-locking" class="headerlink" title="file locking"></a>file locking</h2><p>file server let you know where the callback promise from which exact client who has the copy, some client is writting the file,<br>your turn to decide you want old copy or the latest one.</p>
+<p>Adrew File System , keep ida of caching on client side, use different approach. The majority of users’ files are small. Squential reads chunks of files.<br>Temporal reads means if read the block of file now, in the futhure user will read it again.</p>
+<p>Cacheing algorithms plays two things: frequency and recency. How smart you can play them.</p>
+<h2 id="Sharing-File-in-Coda"><a href="#Sharing-File-in-Coda" class="headerlink" title="Sharing File in Coda"></a>Sharing File in Coda</h2><p>client — server</p>
+<p>— freshness interval : t —</p>
+<p>— time cache entry was last validated by client : T_c , time copy is valid , client gets from the server—</p>
+<p>— current present time : T, time —</p>
+<p>— T_m client(or server) : time file was last modified at server as recorded by client(or server) —</p>
+<p>(T - T_c) &lt; t or T_m client == T_m server. If (current time - last valid time) &lt; internal time. If last modiefied time are the same on both server and client, it’s ok to continue using the file.</p>
+<p>When client B <strong>close</strong> file, copy send to the server, client A gets the call back from server “copy invalidation” then decide get new file or keep old file. But if only read, A is fine with it. If client A wants the new copy, client A close the file and open it again, server will send new copy when “open” action happens. If client A open file by read only, no need to send the copy back to server and the server no need to send message about the file to client B while B is reading the file, because B already has the latest copy.</p>
+<h2 id="cluster-based-distributed-file-systems"><a href="#cluster-based-distributed-file-systems" class="headerlink" title="cluster-based distributed file systems"></a>cluster-based distributed file systems</h2><p>Blocks of file are storaged in distributed storage server. Two types: </p>
+<ul>
+<li>file splits into blocks, blocks from same file go to the same server,have high fault tolerance, because one server down still other server can acess other files.</li>
+<li>same file splits into different server, for large scale, reads in pair so that once one server is down, still can access any block.</li>
+</ul>
+<p>master:(file name space mapping from file names to chunk serers)</p>
+<ul>
+<li>only metadata, name space</li>
+<li>keep in memory, periodically made persistent, if fail can send the last valid mapping is</li>
+<li>each GFS file divided into 64 MB chunks</li>
+<li>chunks are distributed accross chunk servers</li>
+</ul>
+<p>check server:</p>
+<ul>
+<li>chunks are replicated across chunk servers (1 primary chunk server)</li>
+</ul>
+<p>chunck server:</p>
+<ul>
+<li>keepts up identifier to located chunks</li>
+</ul>
+<p>which chunk of file should be responded, master server doesn’t store real data, only store meta data, also called name server, know which chunk server stores the chunk of file. In the chunk server, there are replication on chunk server, at least one another chunk server replicate files. Only primary chunk server answers the request from client, if primary chunk server down, the request goes to replicated chunk server. Eg. client “write” action happends, master server send back the index, client find the primary chunk server according to index, when done, the primary chunk server updates all replication on other chunck servers.</p>
+<p>cluster helps files locate to chunk servers. </p>
+<blockquote>
+<p>Reference material:<br>Book: Distributed Systems, Third edition, Version 3.02(2018), Maarten van Steen and Andrew S. Tanenbaum.<br>Lectures: University of Waterloo, CS 454/654 (Distributed System), 2020 winter term, Professor Khuzaima Daudjee.</p>
+</blockquote>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Run Zeng</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Be my own hero. Never never never give up...</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/distributed-system/"># distributed system</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/04/26/ds-12/">Distributed system - Class 12(Coordination and physical clock)</a>
+            
+            
+            <a class="next" rel="next" href="/2020/04/26/ds-14/">Distributed system - Class 14(transaction)</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Run Zeng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
