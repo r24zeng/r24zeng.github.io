@@ -14,7 +14,7 @@
 
 
 
-<title>Socket Programming | Run Zeng&#39;s Blog</title>
+<title>Reliable Data Transfer(RDT) - TCP | Run Zeng&#39;s Blog</title>
 
 
 
@@ -175,7 +175,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Socket Programming</h1>
+            <h1 class="post-title">Reliable Data Transfer(RDT) - TCP</h1>
             
                 <div class="post-meta">
                     
@@ -184,7 +184,7 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">June 4, 2020&nbsp;&nbsp;1:03:06</a>
+                        Date: <a href="#">June 19, 2020&nbsp;&nbsp;8:58:48</a>
                         </span>
                     
                     
@@ -200,18 +200,23 @@
         </header>
 
         <div class="post-content">
-            <h2 id="UDPclient-py"><a href="#UDPclient-py" class="headerlink" title="UDPclient.py"></a>UDPclient.py</h2><blockquote>
-<p>from socket import *<br>serverName = ’hostname’<br>serverPort = 12000<br>clientSocket = socket(AF_INET, SOCK_DGRAM)<br>message = raw_input(’Input lowercase sentence:’)<br>clientSocket.sendto(message.encode(),(serverName, serverPort))<br>modifiedMessage, serverAddress = clientSocket.recvfrom(2048)<br>print(modifiedMessage.decode())<br>clientSocket.close()</p>
-</blockquote>
-<h2 id="UDPserver-py"><a href="#UDPserver-py" class="headerlink" title="UDPserver.py"></a>UDPserver.py</h2><blockquote>
-<p>from socket import *<br>serverPort = 12000<br>serverSocket = socket(AF_INET, SOCK_DGRAM)<br>serverSocket.bind((’’, serverPort))<br>print(”The server is ready to receive”)<br>while True:<br>  message, clientAddress = serverSocket.recvfrom(2048)<br>  modifiedMessage = message.decode().upper()<br>  serverSocket.sendto(modifiedMessage.encode(), clientAddress)</p>
-</blockquote>
-<h2 id="TCPclient-py"><a href="#TCPclient-py" class="headerlink" title="TCPclient.py"></a>TCPclient.py</h2><blockquote>
-<p>from socket import *<br>serverName = ’servername’<br>serverPort = 12000<br>clientSocket = socket(AF_INET, SOCK_STREAM)<br>clientSocket.connect((serverName, serverPort))<br>sentence = raw_input(’Input lowercase sentence:’)<br>clientSocket.send(sentence.encode())<br>modifiedSentence = clientSocket.recv(1024)<br>print(’From Server: ’, modifiedSentence.decode())<br>clientSocket.close()</p>
-</blockquote>
-<h2 id="TCPserver-py"><a href="#TCPserver-py" class="headerlink" title="TCPserver.py"></a>TCPserver.py</h2><blockquote>
-<p>from socket import *<br>serverPort = 12000<br>serverSocket = socket(AF_INET, SOCK_STREAM)<br>serverSocket.bind((’’, serverPort))<br>serverSocket.listen(1)<br>print(’The server is ready to receive’)<br>while True:<br>  connectionSocket, addr = serverSocket.accept()<br>  sentence = connectionSocket.recv(1024).decode()<br>  capitalizedSentence = sentence.upper()<br>  connectionSocket.send(capitalizedSentence.encode())<br>  connectionSocket.close()</p>
-</blockquote>
+            <h2 id="Features-of-Reliable-Data-Transfer"><a href="#Features-of-Reliable-Data-Transfer" class="headerlink" title="Features of Reliable Data Transfer"></a>Features of Reliable Data Transfer</h2><ul>
+<li>no errors in package</li>
+<li>gurrantee dlievered in order</li>
+</ul>
+<p>TCP stop-and-wait protocol is improved to pipelined protocol, which is more effiecnt. TCP pipeline protocol increases sequence number to send multiple packages back-to-back.</p>
+<p><img src="/img/my54.jpg" alt="TCP 3-way handshanking"><br>TCP has two socket connections. In building client-server connection, it has 3 phases handshaking. Then transmission connection starts.</p>
+<p>Two important fields in TCP ensure package delievered are <strong>sequence segment</strong> and <strong>acknowledge segment</strong>. <strong>Sequence segment</strong> means the starting segement of the package the host sends out. <strong>acknowledge segment</strong> means the starting segment of the package the host expects. They may start with different segment and are defined by the client and server respectively.</p>
+<p><img src="/img/my53.jpg" alt="TCP segment format"></p>
+<p>However, Those can’t guarantee package recieved in order because some packages arrive to server ealy or late. Then receive buffer of transfer layer is needed. Network layer doesn’t have buffer and guarantee reliability. TCP is the best choice to network’s reliability.</p>
+<p><strong>window size</strong> is the orginal assigned buffer size the host gives to the client. <strong>window size of unacknowledged package</strong> must less than (1/2) range of sequence segment. only until the old packages are acknowledged by host, then the licent can continue sending subsequence pacakges.</p>
+<h2 id="Congestion-management"><a href="#Congestion-management" class="headerlink" title="Congestion management"></a>Congestion management</h2><ul>
+<li>TCP congestioin control: allows sender to send data at speed that doesn’t overwhelm network.</li>
+<li>TCP flow control: reciever informs sender its avaliable buffer space <em>rwnd</em>, to match sending speed to reciever processing data, ensures reciver’s buffer doesn’t overflow.</li>
+</ul>
+<h2 id="Maximum-Segment-Size-MSS"><a href="#Maximum-Segment-Size-MSS" class="headerlink" title="Maximum Segment Size( MSS )"></a>Maximum Segment Size( MSS )</h2><p>TCP header length is 20 bytes, IP header lenght is 40 bytes. So transfer segment has bytes of (data size + header size). <strong>MSS</strong> is bonded with <strong>MTU</strong>.</p>
+<p><strong>MTU</strong>: maximum transfer link layer frame unit. Each link load is different. For example, if <strong>MTU</strong> is 1500 bytes, because IP occupied 20 bytes and TCP header occupied 20 bytes. So MSS is 1460 bytes, which is only for TCP data segment. We should specify <strong>MSS</strong> in TCP header field.</p>
+<h2 id="TCP-timeout"><a href="#TCP-timeout" class="headerlink" title="TCP timeout"></a>TCP timeout</h2><p>First set <strong>smapleRTT</strong>( timeout ) 1 second, then timeout and reset double timeout, resend the pacakge and the timer until get acknowledge of that package so as to get <strong>estimateRTT</strong>. Recall <strong>RTT</strong> is a pakcage round-trip time.</p>
 <blockquote>
 <p>Reference material:<br>Book: Computer Networking A Top-Down Approach 7th edition, Jim Kurose &amp; Keith Ross, Addison-Wesley.<br>Slides: University of Waterloo, ECE 456/656 (Computer Networks), 2020 spring term, Professor Zille Huma Kamal.</p>
 </blockquote>
@@ -256,8 +261,10 @@
         </section>
         <section class="post-nav">
             
+                <a class="prev" rel="prev" href="/2020/12/08/fortinet1/">IP adress</a>
             
-            <a class="next" rel="next" href="/2020/06/03/comNet6/">Peer-to-Peer File System</a>
+            
+            <a class="next" rel="next" href="/2020/06/11/comNet8/">UDP vs TCP</a>
             
         </section>
 

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Run Zeng">
+
+
+    <meta name="subtitle" content="Welcome to my blog">
+
+
+
+
+<title>IP adress | Run Zeng&#39;s Blog</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">Run Zeng&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">Run Zeng&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">IP adress</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">Run Zeng</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">December 8, 2020&nbsp;&nbsp;14:42:59</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/self-study/">self study</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1 id="1-IP-address-IPv4"><a href="#1-IP-address-IPv4" class="headerlink" title="1. IP address(IPv4)"></a>1. IP address(IPv4)</h1><blockquote>
+<p>一个 IPv4 IP 地址长度是 32 bits，每个字节用<code>.</code>隔开</p>
+</blockquote>
+<p>IP 地址分为两部分，用‘/’隔开，一般用十进制表示，前半部分是network prefix，意思是具有相同的network prefix属于统一网段，两台机器可以直接通信；后半部分是host ID，即主机ID，特指某一台机器的IP地址。用IP地址类比一个人的家庭住址，network prefix帮助定位在哪个城市街道和楼，host ID帮助定位到具体的单元号。不同的网段的机器需要通过router甚至switch传输信息。</p>
+<p>注：‘/’可从任意位分割。</p>
+<h1 id="2-Subnet"><a href="#2-Subnet" class="headerlink" title="2. Subnet"></a>2. Subnet</h1><blockquote>
+<p>子网，即我们所说的网段，属同一子网的两台主机可直接通信</p>
+</blockquote>
+<p><strong>例如:</strong></p>
+<ul>
+<li>168.192.1.1/24  其中前半段24位<em>168.192.1</em>是网络地址，168.192.1.0 - 168.192.1.255 是这个IP所属的网段，<em>10000000</em>是主机地址；</li>
+<li>168.192.1.2/24 这个地址与上面的地址属于同一个网段</li>
+<li>168.192.1.2/16 这个地址与上面的地址是一样的，但是它的网段更宽一些，网段包含了上面的网段；</li>
+</ul>
+<h1 id="3-Netmask"><a href="#3-Netmask" class="headerlink" title="3. Netmask"></a>3. Netmask</h1><blockquote>
+<p>子网掩码即IP地址中的’/‘的十进制表示，代表了分割线</p>
+</blockquote>
+<p><strong>例如：168.192.1.1/24</strong> <br><br>前面24位都是network ID，在掩码中全部写为1，后面8位全是host ID，在掩码中全部写为0. 按照这个规则，掩码就是<strong>11111111.11111111.11111111.00000000</strong>, 即<strong>255.255.255.0</strong>，那么这个组网中允许（2^8-2=254）个主机存在，足够一个小型局域网的使用了。其中<em>255.255.255.0</em>和<em>255.255.255.255</em>属于保留地址，前者表示网段地址，后者是广播地址，意思是如果<code>ping 255.255.255.255</code>, 则表示向网段中所有主机广播消息。</p>
+<p>根据网络掩码分类，一般有三种种类的网络：</p>
+<ul>
+<li>A类(/8)：netmask为 255.0.0.0, IP地址最高位为 0，所以第一个字节范围是 0（00000000）- 127（01111111）</li>
+<li>B类(/16)：netmask为 255.255.0.0，IP地址最高位为 10，所以第一个字节范围是 128（10000000） - 191（10111111）</li>
+<li>C类(/24)：netmask为 255.255.255.0，IP地址最高位为 110，所以第一个字节范围是 192（11000000）- 223（11011111） </li>
+</ul>
+<p>本地地址永远是 127.0.0.1</p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Run Zeng</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Be my own hero. Never never never give up...</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/computer-network/"># computer network</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/12/08/fortinet2/">Vlan and Routing</a>
+            
+            
+            <a class="next" rel="next" href="/2020/06/19/comNet9/">Reliable Data Transfer(RDT) - TCP</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+        </div>
+        <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Run Zeng | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
